@@ -3,6 +3,7 @@ AIO
 Agenda inteligente para la gestión eficiente de objetivos personales
 
 Trello - gestión del proyecto Kanban: https://trello.com/invite/b/gVTwOCxQ/ATTIca07d8677ce6d98b1f30b853868e5a393D8B40F2/aio-v1
+
 Figma - diseño de los mock-ups: https://www.figma.com/design/DjuzsWmMb7EkzXcJMSuVaK/TFG-AIO?node-id=0-1&t=G1jJ2RSqdkfO3kBx-1
 
 Versión 1.1:
