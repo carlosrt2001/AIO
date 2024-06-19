@@ -1,4 +1,5 @@
 AIO
+
 Agenda inteligente para la gestión eficiente de objetivos personales
 
 Trello - gestión del proyecto Kanban: https://trello.com/invite/b/gVTwOCxQ/ATTIca07d8677ce6d98b1f30b853868e5a393D8B40F2/aio-v1
@@ -13,6 +14,7 @@ Versión 1.1:
 - Un usuario podrá iniciar sesión.
 - El sistema deberá permitir al usuario iniciar sesión mediante el nombre de usuario o el correo electrónico junto con la contraseña.
 - Un usuario podrá crear un objetivo.
+- Un usuario podrá editar un objetivo.
 - Un usuario podrá eliminar un objetivo.
 - Un usuario podrá crear una tarea.
 - Un usuario podrá editar una tarea.
