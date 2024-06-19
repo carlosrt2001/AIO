@@ -32,3 +32,5 @@ Versión 1.1:
 - El sistema deberá emitir notificaciones a la bandeja de entrada del usuario.
 - El sistema mostrará una página de error con información relevante.
 - Un usuario podrá cambiar el color de su agenda.
+- El sistema solo deberá permitir acceder a las funcionalidades a aquellos usuarios que hayan iniciado sesión previamente.
+
