@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/register.css') }}">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <title>Register</title>
+</head>
+<body>
+    <a href="/" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+    <div class="wrapper">
+        <form id="formRegister" method="post" enctype="multipart/form-data" action="/register">
+            <h2>Regístrate</h2>
+
+            <p for="profile_image">Foto de perfil:</p>
+            <div class="image-container">
+                <img id="profile_image" style="display: none;"><br>
+                <input type="file" name="imageInput" id="imageInput" accept="image/*"><br><br><br>
+            </div>
+
+            <label for="user">Nombre de usuario: *</label>
+            <input type="text" id="user" name="user" required><br><br>
+
+            <label for="email">Correo electrónico:</label>
+            <input type="email" id="email" name="email"><br><br>
+
+            <label for="phone_number">Teléfono:</label>
+            <div class="phone-container">
+                <select id="country_code" name="country_code" required>
+                    <option value="+1">+1 (EE.UU.)</option>
+                    <option value="+34">+34 (España)</option>
+                    <option value="+52">+52 (México)</option>
+                    <option value="+44">+44 (Reino Unido)</option>
+                </select>
+                <input type="tel" id="phone_number" name="phone_number"><br><br>
+            </div>
+
+            <label for="password1">Contraseña: *</label>
+            <div class="password-container">
+                <input type="password" id="password1" name="password1" required><br><br>
+                <i id="eye1" class="fas fa-eye toggle-password" onclick="togglePassword('password1', 'eye1')"></i>
+            </div><br><br>
+
+
+            <label for="password2">Confirmar contraseña: *</label>
+            <div class="password-container">
+                <input type="password" id="password2" name="password2" required><br><br>
+                <i id="eye2" class="fas fa-eye toggle-password" onclick="togglePassword('password2', 'eye2')"></i>
+            </div><br><br>
+
+            <p id="message">{{ message }}</p><br><br>
+
+            <button type="submit">Regístrate</button>
+
+            <p>¿Ya tienes una cuenta?</p>
+            <button class="btn-gotoLogIn" onclick="window.location.href='/login'">Inicia Sesión</button>
+        </form>
+    </div>
+
+    {% include 'footer.html' %}
+    <script src="{{ url_for('static', filename='js/register.js') }}"></script>
+</body>
+</html>

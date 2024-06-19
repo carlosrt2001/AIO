@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
+    <title>Home</title>
+</head>
+<body>
+    <div class="login-container">
+        <div class="text">
+            <h1>AIO</h1>
+            <p id="subtitle">Agenda Inteligente para la gestión eficiente de Objetivos</p>
+        </div>
+        <div class="buttons">
+            <button class="btn" onclick="window.location.href='/login'">Inicia Sesión</button>
+            <button class="btn" onclick="window.location.href='/register'">Regístrate</button>
+        </div>
+    </div>
+    <div class="functions-container">
+        <div class="function">
+            <i class="fas fa-bullseye"></i>
+            <h3 class="function-title">Objetivos</h3>
+            <p class="function-description">Marca tus objetivos</p>
+        </div>
+        <div class="function">
+            <i class="far fa-calendar-alt"></i>
+            <h3 class="function-title">Agenda</h3>
+            <p class="function-description">Consulta tu agenda</p>
+        </div>
+        <div class="function">
+            <i class="fas fa-chart-line"></i>
+            <h3 class="function-title">Progreso</h3>
+            <p class="function-description">Monitoriza tu progreso</p>
+        </div>
+        <div class="function">
+            <i class="fas fa-inbox"></i>
+            <h3 class="function-title">Notificaciones</h3>
+            <p class="function-description">Atento a las alertas</p>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+</html>

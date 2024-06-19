@@ -1,0 +1,185 @@
+* {
+  font-family: 'Montserrat', sans-serif;
+  --green: #2eb19f;
+  --dark_green: #38a092;
+  --blue: #b7edff;
+  --orange: #ff9642;
+  --grey: #f5f5f5;
+  --dark_grey: #262626;
+  --red: #e21010;
+  --white: #fff;
+  --black: #262626;
+}
+
+body {
+    background-color: var(--grey);
+}
+
+h2 {
+    font-size: 40px;
+    margin-bottom: 40px;
+    text-align: center;
+    color: var(--dark_green);
+}
+
+.form {
+    color: var(--black);
+    padding: 20px;
+    border-radius: 5px;
+    margin: 0 auto;
+    font-size: 20px;
+    text-align: center;
+}
+
+.user_image {
+    max-width: 20%;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.buttons button {
+    width: 50%;
+    max-width: 250px;
+}
+
+#editProfile {
+    margin-top: 20px;
+    margin-left: 20px;
+    padding: 12px;
+    background-color: var(--green);
+    color: var(--white);
+    border-radius: 5px;
+    font-size: 25px;
+    cursor: pointer;
+    border: 2px solid;
+}
+
+#editProfile i {
+    margin-right: 8px;
+}
+
+
+#editProfile:hover {
+    background-color: var(--white);
+    color: var(--green);
+    border: 2px solid var(--green);
+}
+
+
+#logout {
+    margin-top: 20px;
+    margin-left: 20px;
+    padding: 12px;
+    background-color: var(--red);
+    color: var(--white);
+    border-radius: 5px;
+    font-size: 25px;
+    cursor: pointer;
+    border: 2px solid;
+}
+
+#logout:hover {
+    background-color: var(--white);
+    color: var(--red);
+    border: 2px solid var(--red);
+}
+
+#logout i {
+    margin-right: 8px;
+}
+
+#deleteProfile {
+    margin-top: 20px;
+    margin-left: 20px;
+    padding: 12px;
+    background-color: var(--dark_grey);
+    color: var(--white);
+    border-radius: 5px;
+    font-size: 25px;
+    cursor: pointer;
+    border: 2px solid;
+}
+
+#deleteProfile i {
+    margin-right: 8px;
+}
+
+
+#deleteProfile:hover {
+    background-color: var(--white);
+    color: var(--dark_grey);
+    border: 2px solid var(--dark_grey);
+}
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);;
+    color: var(--black);
+    font-size: 20px;
+}
+
+.modal-content {
+    background-color: var(--grey);
+    margin: 15% auto;
+    padding: 20px;
+    border: 2px solid var(--green);
+    width: 80%;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.modal-button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    background-color: var(--green);
+    color: var(--white);
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    border: 2px solid;
+}
+
+.modal-button:hover {
+    background-color: var(--white);
+    color: var(--green);
+    border: 2px solid var(--green);
+}
+
+
+#phone_country_code,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"]{
+    width: calc(20%);
+    font-size: 15px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+.message {
+    font-size: 20px;
+    margin-top: 15px;
+}
+.error-message {
+    color: var(--red);
+}
+.success-message {
+    color: var(--dark_green);
+}

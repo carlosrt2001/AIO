@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/task.css') }}">
+    <title>Task</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdeQr46XqTgVV10c3cp6jUkKX_1FbGCNA&libraries=places"></script>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <h2>{{ task.name }}</h2>
+    <div class="task">
+        <div class="task_info">
+            <strong>Horas mínimas: </strong> <span>{{ task.min_hours }}</span><br><br>
+            <strong>Horas máximas: </strong><span>{{ task.max_hours }}</span><br><br>
+            {% if task.location %}
+                <strong>Ubicación: </strong><span>{{ task.location }}</span><br><br>
+            {% else %}
+                <strong>Ubicación: </strong><span>Sin concretar</span><br><br>
+            {% endif %}
+
+            <strong>Horarios:</strong>
+            <ul id="schedule">
+                {% for schedule in task_schedules %}
+                    <li>{{ schedule.day_of_week.value }}: {{ schedule.start_time.strftime('%H:%M') }} - {{ schedule.end_time.strftime('%H:%M') }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="task_btns">
+            <button id="editTask"><i class="fas fa-pencil-alt"></i>Editar Tarea</button>
+            <button id="deleteTask" data-task-id="{{ task.id }}"><i class="fas fa-trash-alt"></i>Eliminar Tarea</button>
+        </div>
+    </div>
+
+    <div id="deleteTaskModal" class="modal">
+        <div class="modal-content">
+            <p>¿Seguro que deseas eliminar esta tarea?</p>
+            <button id="confirmDelete" class="modal-button">Eliminar</button>
+            <button id="cancelDelete" class="modal-button">Cancelar</button>
+        </div>
+    </div>
+
+    <div id="editTaskModal" class="modal">
+        <div class="modal-content">
+            <h2>Editar Tarea</h2>
+            <form id="editTaskForm" method="POST" action="/edit_task/{{ task.id }}" onsubmit="return validateHours()">
+                <label for="name">Nombre de la tarea:</label>
+                <input type="text" id="name" name="name" value="{{ task.name }}" required><br><br>
+
+                <label for="min_hours">Horas mínimas diarias:</label>
+                <input type="number" id="min_hours" name="min_hours" value="{{ task.min_hours }}" min="1" required><br><br>
+
+                <label for="max_hours">Horas máximas diarias:</label>
+                <input type="number" id="max_hours" name="max_hours" value="{{ task.max_hours }}" min="1" required><br><br>
+
+                <label for="location1">Ubicación:</label>
+                {% if task.location %}
+                    <input type="text" id="location1" name="location" value="{{ task.location }}"><br><br>
+                {% else %}
+                    <input type="text" id="location2" name="location" value=""><br><br>
+                {% endif %}
+
+                <div id="schedules">
+                    {% for schedule in task_schedules %}
+                        <div class="schedule">
+                            <label for="day_of_week">Día de la semana:</label>
+                            <select name="day_of_week[]" required>
+                                <option value="LUNES" {% if schedule.day_of_week == 'LUNES' %}selected{% endif %}>Lunes</option>
+                                <option value="MARTES" {% if schedule.day_of_week == 'MARTES' %}selected{% endif %}>Martes</option>
+                                <option value="MIERCOLES" {% if schedule.day_of_week == 'MIERCOLES' %}selected{% endif %}>Miércoles</option>
+                                <option value="JUEVES" {% if schedule.day_of_week == 'JUEVES' %}selected{% endif %}>Jueves</option>
+                                <option value="VIERNES" {% if schedule.day_of_week == 'VIERNES' %}selected{% endif %}>Viernes</option>
+                                <option value="SABADO" {% if schedule.day_of_week == 'SABADO' %}selected{% endif %}>Sábado</option>
+                                <option value="DOMINGO" {% if schedule.day_of_week == 'DOMINGO' %}selected{% endif %}>Domingo</option>
+                            </select>
+
+                            <label for="start_time">Horario: </label>
+                            <input type="time" name="start_time[]" value="{{ schedule.start_time.strftime('%H:%M') }}" required>
+
+                            <label for="end_time">- </label>
+                            <input type="time" name="end_time[]" value="{{ schedule.end_time.strftime('%H:%M') }}" required><br><br>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <button id="addDay" type="button" onclick="addSchedule()">Añadir Día</button>
+                <button id="removeDay" type="button" onclick="removeSchedule()">Quitar Día</button><br><br>
+
+                <button id="saveTask" class="modal-button">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/task.js') }}"></script>
+
+    {% include 'footer.html' %}
+</body>
+</html>

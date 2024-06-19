@@ -1,0 +1,145 @@
+* {
+  font-family: 'Montserrat', sans-serif;
+  --green: #2eb19f;
+  --dark_green: #38a092;
+  --blue: #b7edff;
+  --orange: #ff9642;
+  --grey: #f5f5f5;
+  --dark_grey: #262626;
+  --red: #e21010;
+  --white: #fff;
+  --black: #000;
+}
+
+body {
+    background-color: var(--grey);
+}
+
+h2 {
+    font-size: 40px;
+    margin-bottom: 40px;
+    text-align: center;
+    color: var(--dark_green);
+}
+
+#notifications {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#notification {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+#notification strong {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+}
+
+#notification span {
+    color: #777;
+    margin-top: 5px;
+}
+
+#notification p {
+    margin: 10px 0 0 0;
+    color: #555;
+}
+
+
+.deleteNotification {
+    margin-top: 15px;
+    background-color: var(--dark_grey);
+    color: var(--white);
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    border: 2px solid;
+    width: 10%;
+}
+
+.deleteNotification i {
+    margin-right: 8px;
+}
+
+
+.deleteNotification:hover {
+    background-color: var(--white);
+    color: var(--dark_grey);
+    border: 2px solid var(--dark_grey);
+}
+
+
+#openConfirmationModal {
+    margin-left: 10px;
+    margin-top: 15px;
+    background-color: var(--red);
+    color: var(--white);
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 25px;
+    cursor: pointer;
+    border: 2px solid;
+    width: 30%;
+}
+
+#openConfirmationModal i {
+    margin-right: 8px;
+}
+
+
+#openConfirmationModal:hover {
+    background-color: var(--white);
+    color: var(--red);
+    border: 2px solid var(--red);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);;
+    color: var(--black);
+    font-size: 20px;
+}
+
+.modal-content {
+    background-color: var(--grey);
+    margin: 15% auto;
+    padding: 20px;
+    border: 2px solid var(--green);
+    width: 80%;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.modal-button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    background-color: var(--green);
+    color: var(--white);
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    border: 2px solid;
+}
+
+.modal-button:hover {
+    background-color: var(--white);
+    color: var(--green);
+    border: 2px solid var(--green);
+}

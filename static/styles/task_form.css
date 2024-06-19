@@ -1,0 +1,96 @@
+* {
+  font-family: 'Montserrat', sans-serif;
+  --green: #2eb19f;
+  --dark_green: #38a092;
+  --blue: #b7edff;
+  --orange: #ff9642;
+  --grey: #f5f5f5;
+  --dark_grey: #262626;
+  --red: #e21010;
+  --white: #fff;
+  --black: #000;
+}
+
+body {
+    background-color: var(--grey);
+    color: var(--black);
+}
+
+h2 {
+    font-size: 40px;
+    margin-bottom: 40px;
+    text-align: center;
+    color: var(--dark_green);
+}
+
+#formCreateTask {
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    font-size: 20px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="time"],
+select {
+    width: 20%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 18px;
+}
+
+#createTask {
+    background-color: var(--orange);
+    color: var(--white);
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+    font-size: 30px;
+    width: 40%;
+    margin: 0 auto;
+    border: 2px solid;
+}
+
+#createTask:hover {
+    background-color: var(--white);
+    color: var(--orange);
+    border: 2px solid var(--orange);
+}
+
+
+#addDay {
+    padding: 12px;
+    background-color: var(--green);
+    color: var(--white);
+    border-radius: 5px;
+    font-size: 20px;
+    cursor: pointer;
+    border: 2px solid;
+}
+
+#addDay:hover {
+    background-color: var(--white);
+    color: var(--green);
+    border: 2px solid var(--green);
+}
+
+#removeDay {
+    padding: 12px;
+    background-color: var(--red);
+    color: var(--white);
+    border-radius: 5px;
+    font-size: 20px;
+    cursor: pointer;
+    border: 2px solid;
+}
+
+#removeDay:hover {
+    background-color: var(--white);
+    color: var(--red);
+    border: 2px solid var(--red);
+}

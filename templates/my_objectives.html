@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/my_objectives.css') }}">
+    <title>My Objectives</title>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <h2>Mis Objetivos</h2>
+
+    <button id="btnAddObjective"><i class="fas fa-plus"></i>Crear Objetivo</button>
+
+    {% if objectives %}
+        <ul id="objectives">
+            {% for objective in objectives %}
+                <button class="btnObjective" data-id="{{ objective.id }}" style="background-color: {{ objective.color }};">
+                    <div class="image-container">
+                        {% if objective.image %}
+                            <img class="objective_image" src="{{ url_for('static', filename='images/objectives/' + objective.image) }}">
+                        {% else %}
+                            <img class="objective_image" src="{{ url_for('static', filename='images/objective.png') }}">
+                        {% endif %}
+                    </div>
+                    <div class="text-container">
+                        <p id="objective_name">{{ objective.name }}</p>
+                    </div>
+                </button>
+            {% endfor %}
+        </ul>
+    {% else %}
+            <p id="no_objectives">¡Crea tu primer objetivo!</p>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='js/my_objectives.js') }}"></script>
+
+    {% include 'footer.html' %}
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/header.css') }}">
+    <title>Menu</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><button id="homeButton" class="icon-button {% if active_page == 'main' %}active{% endif %}" onclick="location.href='/main'"><i class="fas fa-home"></i></button></li>
+                <li><button id="objectivesButton" class="icon-button {% if active_page == 'objectives' %}active{% endif %}" onclick="location.href='/objectives'"><i class="fas fa-bullseye"></i></button></li>
+                <li><button id="agendaButton" class="icon-button {% if active_page == 'agenda' %}active{% endif %}" onclick="location.href='/agenda'"><i class="far fa-calendar-alt"></i></button></li>
+                <li><button id="progressButton" class="icon-button {% if active_page == 'progress' %}active{% endif %}" onclick="location.href='/progress'"><i class="fas fa-chart-line"></i></button></li>
+                <li><button id="inboxButton" class="icon-button {% if active_page == 'inbox' %}active{% endif %}" onclick="location.href='/inbox'"><i class="fas fa-inbox"></i></button></li>
+                <li><button id="profileButton" class="icon-button {% if active_page == 'profile' %}active{% endif %}" onclick="location.href='/profile'"><i class="fas fa-user"></i></button></li>
+            </ul>
+        </nav>
+    </header>
+</body>
+</html>

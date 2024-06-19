@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/objective.css') }}">
+    <title>Objective</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <h2>{{ objective.name }}</h2>
+    <div class="objective">
+        <div class="image-info">
+            {% if objective.image %}
+                <img class="objective_image" src="{{ url_for('static', filename='images/objectives/' + objective.image) }}">
+            {% else %}
+                <img class="objective_image" src="{{ url_for('static', filename='images/objective.png') }}">
+            {% endif %}
+            <div class="objective_info">
+                <strong>Prioridad: </strong><span>{{ objective.priority }}</span><br><br>
+                <strong>Horas semanales: </strong><span>{{ objective.hours }}</span><br><br>
+                <strong>Período: </strong>
+                {% if objective.start_date %}
+                    {% if objective.end_date %}
+                        <span>{{ objective.start_date.strftime('%d/%m/%Y') }} - {{ objective.end_date.strftime('%d/%m/%Y') }}</span>
+                    {% else %}
+                        <span>{{ objective.start_date.strftime('%d/%m/%Y') }} - Sin concretar</span>
+                    {% endif %}
+                {% else %}
+                    {% if objective.end_date %}
+                        <span>Sin concretar - {{ objective.end_date.strftime('%d/%m/%Y') }}</span>
+                    {% else %}
+                        <span>Sin concretar - Sin concretar</span>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="objective_btns">
+            <button id="editObjective"><i class="fas fa-pencil-alt"></i>Editar Objetivo</button>
+            <button id="deleteObjective" data-objective-id="{{ objective.id }}"><i class="fas fa-trash-alt"></i>Eliminar Objetivo</button>
+        </div>
+    </div>
+
+    <h3>Lista de Tareas</h3>
+    <button id="btnAddTask" data-objective-id="{{ objective.id }}"><i class="fas fa-plus"></i>Añadir Tarea</button>
+
+    {% if objective.tasks %}
+        <ul>
+            {% for task in objective.tasks %}
+                <button class="btnTask" data-id="{{ task.id }}" style="background-color: {{ objective.color }};">
+                    <li>
+                        <div class="text-container">
+                            <p id="task_name">{{ task.name }}</p>
+                        </div>
+                    </li>
+                </button>
+            {% endfor %}
+        </ul>
+    {% else %}
+            <p id="no_tasks">Añade tareas para completar tu objetivo</p>
+    {% endif %}
+
+    <div id="deleteObjectiveModal" class="modal">
+        <div class="modal-content">
+            <p>¿Seguro que deseas eliminar este objetivo?</p>
+            <button id="confirmDelete" class="modal-button">Eliminar</button>
+            <button id="cancelDelete" class="modal-button">Cancelar</button>
+        </div>
+    </div>
+
+    <div id="editObjectiveModal" class="modal">
+        <div class="modal-content">
+            <h2>Editar Objetivo</h2>
+            <form id="editObjectiveForm" method="post" action="/edit_objective/{{ objective.id }}" onsubmit="return validateDates()">
+                <label for="name">Nombre del Objetivo:</label>
+                <input type="text" id="name" name="name" value="{{ objective.name }}" required><br><br>
+
+                <label for="priority">Prioridad:</label>
+                <select id="priority" name="priority" value="{{ objective.priority }}">
+                    <option value="Alta">Alta</option>
+                    <option value="Media" selected>Media</option>
+                    <option value="Baja">Baja</option>
+                </select><br><br>
+
+                <label for="hours">Horas Semanales:</label>
+                <input type="number" id="hours" name="hours" value="{{ objective.hours }}" min="1" value="1" required><br><br>
+
+                <label for="start_date">Fecha de Inicio:</label>
+                <input type="date" id="start_date" name="start_date" value="{{ objective.start_date }}"><br><br>
+
+                <label for="end_date">Fecha de Finalización:</label>
+                <input type="date" id="end_date" name="end_date" value="{{ objective.end_date }}"><br><br>
+
+                <button id="saveEdit" class="modal-button">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script src="{{ url_for('static', filename='js/objective.js') }}"></script>
+
+    {% include 'footer.html' %}
+</body>
+</html>

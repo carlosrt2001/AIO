@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/profile.css') }}">
+    <title>Profile</title>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <h2>Mi Perfil</h2>
+    <div class="form">
+        <div class="image-container">
+            {% if user.image %}
+                <img class="user_image" src="{{ url_for('static', filename='images/profile/' + user.image) }}">
+            {% else %}
+                <img class="user_image" src="{{ url_for('static', filename='images/profile.png') }}">
+            {% endif %}
+        </div>
+        <p><strong>Nombre de usuario:</strong> {{ user.username }}</p>
+
+        {% if user.email %}
+            <p><strong>Correo electrónico:</strong> {{ user.email }}</p>
+        {% else %}
+            <p><strong>Correo electrónico:</strong> Sin concretar</p>
+        {% endif %}
+
+        {% if user.phone_number %}
+            <p><strong>Teléfono:</strong> {{ user.phone_country_code }} {{ user.phone_number }}</p>
+        {% else %}
+            <p><strong>Teléfono:</strong> Sin concretar</p>
+        {% endif %}
+
+        {% if error_message %}
+            <p class="message error-message">{{ error_message }}</p>
+        {% endif %}
+        {% if success_message %}
+            <p class="message success-message">{{ success_message }}</p>
+        {% endif %}
+
+        <div class="buttons">
+            <button id="editProfile"><i class="fas fa-pencil-alt"></i>Editar Perfil</button>
+            <button id="logout"><i class="fas fa-sign-out-alt"></i>Cerrar Sesión</button>
+            <button id="deleteProfile"><i class="fas fa-trash-alt"></i>Eliminar Cuenta</button>
+        </div>
+    </div>
+
+    <div id="editProfileModal" class="modal">
+        <div class="modal-content">
+            <h2>Editar Perfil</h2>
+            <form id="editProfileForm" method="POST" action="/edit_profile" enctype="multipart/form-data">
+                <label for="username">Nombre de usuario:</label>
+                <input type="text" id="username" name="username" value="{{ user.username }}" maxlength="10" required><br><br>
+
+                <label for="email">Correo electrónico:</label>
+                <input type="email" id="email" name="email" {% if user.email %}value="{{ user.email }}"{% endif %}><br><br>
+
+                <label for="phone_country_code">Teléfono:</label>
+                <select id="phone_country_code" name="phone_country_code" required>
+                    <option value="+1" {% if user.phone_country_code == "+1" %}selected{% endif %}>+1 (EE.UU.)</option>
+                    <option value="+34" {% if user.phone_country_code == "+34" %}selected{% endif %}>+34 (España)</option>
+                    <option value="+52" {% if user.phone_country_code == "+52" %}selected{% endif %}>+52 (México)</option>
+                    <option value="+44" {% if user.phone_country_code == "+44" %}selected{% endif %}>+44 (Reino Unido)</option>
+                </select>
+
+                <input type="tel" id="phone_number" name="phone_number" {% if user.phone_number %}value="{{ user.phone_number }}"{% endif %}><br><br>
+
+
+                <button type="submit" class="modal-button">Guardar</button>
+                <button type="button" id="cancelEditProfile" class="modal-button">Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <p>¿Seguro que deseas cerrar la sesión?</p>
+            <button id="confirmLogout" class="modal-button">Aceptar</button>
+            <button id="cancelLogout" class="modal-button">Cancelar</button>
+        </div>
+    </div>
+    <div id="deleteAccountModal" class="modal">
+        <div class="modal-content">
+            <p>¿Seguro que deseas eliminar tu cuenta? Esta acción no se puede deshacer.</p>
+            <button id="confirmDelete" class="modal-button">Eliminar</button>
+            <button id="cancelDelete" class="modal-button">Cancelar</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+
+    {% include 'footer.html' %}
+</body>
+</html>

@@ -1,0 +1,29 @@
+* {
+  font-family: 'Montserrat', sans-serif;
+  --green: #2eb19f;
+  --dark_green: #38a092;
+  --blue: #b7edff;
+  --orange: #ff9642;
+  --grey: #f5f5f5;
+  --dark_grey: #262626;
+  --red: #e21010;
+  --white: #fff;
+  --black: #000;
+}
+
+body {
+    background-color: var(--grey);
+}
+
+h2 {
+    font-size: 100px;
+    margin-bottom: 40px;
+    text-align: center;
+    color: var(--dark_green);
+}
+
+p {
+    font-size: 35px;
+    text-align: center;
+    color: var(--dark_grey);
+}

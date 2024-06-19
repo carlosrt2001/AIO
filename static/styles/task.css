@@ -1,0 +1,186 @@
+* {
+  font-family: 'Montserrat', sans-serif;
+  --green: #2eb19f;
+  --dark_green: #38a092;
+  --blue: #b7edff;
+  --orange: #ff9642;
+  --grey: #f5f5f5;
+  --dark_grey: #262626;
+  --red: #e21010;
+  --white: #fff;
+  --black: #000;
+}
+
+body {
+    background-color: var(--grey);
+    color: var(--black);
+}
+
+h2 {
+    font-size: 40px;
+    margin-bottom: 40px;
+    text-align: center;
+    color: var(--dark_green);
+}
+
+
+
+.task_info {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 20px;
+}
+
+.task_btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#schedule {
+    list-style-type: none;
+}
+
+
+#editTask {
+    padding: 8px;
+    background-color: var(--dark_green);
+    color: var(--white);
+    border-radius: 2px;
+    font-size: 20px;
+    cursor: pointer;
+    border: 2px solid;
+}
+
+#editTask:hover {
+    background-color: var(--white);
+    color: var(--dark_green);
+    border: 2px solid var(--dark_green);
+}
+
+#editTask i {
+    margin-right: 8px;
+}
+
+#deleteTask {
+    padding: 8px;
+    background-color: var(--dark_grey);
+    color: var(--white);
+    border-radius: 2px;
+    font-size: 20px;
+    cursor: pointer;
+    border: 2px solid;
+}
+
+#deleteTask:hover {
+    background-color: var(--white);
+    color: var(--dark_grey);
+    border: 2px solid var(--dark_grey);
+}
+
+#deleteTask i {
+    margin-right: 8px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);;
+    color: var(--black);
+    font-size: 20px;
+}
+
+.modal-content {
+    background-color: var(--grey);
+    margin: 15% auto;
+    padding: 20px;
+    border: 2px solid var(--green);
+    width: 80%;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.modal-button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    background-color: var(--orange);
+    color: var(--white);
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    border: 2px solid;
+}
+
+.modal-button:hover {
+    background-color: var(--white);
+    color: var(--orange);
+    border: 2px solid var(--orange);
+}
+
+#addDay {
+    margin-right: 10px;
+    padding: 10px 20px;
+    background-color: var(--green);
+    color: var(--white);
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    border: 2px solid;
+}
+
+#addDay:hover {
+    background-color: var(--white);
+    color: var(--green);
+    border: 2px solid var(--green);
+}
+
+#removeDay {
+    margin-right: 10px;
+    padding: 10px 20px;
+    background-color: var(--red);
+    color: var(--white);
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    border: 2px solid;
+}
+
+#removeDay:hover {
+    background-color: var(--white);
+    color: var(--red);
+    border: 2px solid var(--red);
+}
+
+#saveTask {
+    margin-right: 10px;
+    padding: 10px 20px;
+    background-color: var(--orange);
+    color: var(--white);
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    border: 2px solid;
+}
+
+#saveTask:hover {
+    background-color: var(--white);
+    color: var(--orange);
+    border: 2px solid var(--orange);
+}
+
+input[type="text"],
+input[type="number"],
+input[type="time"],
+select {
+    width: 20%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    font-size: 15px;
+}

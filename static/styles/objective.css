@@ -1,0 +1,221 @@
+* {
+  font-family: 'Montserrat', sans-serif;
+  --green: #2eb19f;
+  --dark_green: #38a092;
+  --blue: #b7edff;
+  --orange: #ff9642;
+  --grey: #f5f5f5;
+  --dark_grey: #262626;
+  --red: #e21010;
+  --white: #fff;
+  --black: #000;
+}
+
+body {
+    background-color: var(--grey);
+    color: var(--black);
+}
+
+h2 {
+    font-size: 40px;
+    margin-bottom: 40px;
+    text-align: center;
+    color: var(--dark_green);
+}
+
+.image-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.objective_image {
+    width: auto;
+    height: 20%;
+    max-width: 20%;
+    max-height: 40%;
+    border-radius: 5px;
+    margin-right: 20px;
+}
+
+.objective_info {
+    text-align: center;
+    margin-right: 40px;
+    font-size: 20px;
+}
+
+.objective_btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 60px;
+}
+
+
+
+#editObjective {
+    padding: 8px;
+    background-color: var(--dark_green);
+    color: var(--white);
+    border-radius: 2px;
+    font-size: 20px;
+    cursor: pointer;
+    border: 2px solid;
+    margin-right: 15px;
+}
+
+#editObjective:hover {
+    background-color: var(--white);
+    color: var(--dark_green);
+    border: 2px solid var(--dark_green);
+}
+
+#editObjective i {
+    margin-right: 8px;
+}
+
+#deleteObjective {
+    padding: 8px;
+    background-color: var(--dark_grey);
+    color: var(--white);
+    border-radius: 2px;
+    font-size: 20px;
+    cursor: pointer;
+    border: 2px solid;
+}
+
+#deleteObjective:hover {
+    background-color: var(--white);
+    color: var(--dark_grey);
+    border: 2px solid var(--dark_grey);
+}
+
+#deleteObjective i {
+    margin-right: 8px;
+}
+
+h3 {
+    font-size: 35px;
+    text-align: center;
+    color: var(--dark_grey);
+}
+
+#btnAddTask {
+    margin-left: 20px;
+    padding: 12px;
+    background-color: var(--orange);
+    color: var(--white);
+    border-radius: 5px;
+    font-size: 25px;
+    cursor: pointer;
+    border: 2px solid;
+}
+
+#btnAddTask:hover {
+    background-color: var(--white);
+    color: var(--orange);
+    border: 2px solid var(--orange);
+}
+
+#btnAddTask i {
+    margin-right: 8px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.btnTask {
+    display: block;
+    width: calc(100% - 40px);
+    margin: 10px auto;
+    padding: 15px;
+    background-color: var(--green);
+    color: var(--white);
+    border-radius: 5px;
+    font-size: 24px;
+    cursor: pointer;
+    border: 2px solid;
+}
+
+.btnTask:hover {
+    transform: scale(1.05);
+}
+
+#task_name {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 30px;
+}
+
+.text-container {
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+li {
+    font-size: 18px;
+}
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);;
+    color: var(--black);
+    font-size: 20px;
+}
+
+.modal-content {
+    background-color: var(--grey);
+    margin: 15% auto;
+    padding: 20px;
+    border: 2px solid var(--green);
+    width: 80%;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.modal-button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    background-color: var(--orange);
+    color: var(--white);
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    border: 2px solid;
+}
+
+.modal-button:hover {
+    background-color: var(--white);
+    color: var(--orange);
+    border: 2px solid var(--orange);
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select {
+    width: 20%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    font-size: 15px;
+}
+
+#no_tasks {
+    text-align: center;
+    font-size: 32px;
+    color: var(--dark_grey);
+}

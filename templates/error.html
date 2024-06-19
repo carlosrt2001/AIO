@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/error.css') }}">
+    <title>Error</title>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <h2>¡ERROR!</h2>
+    <p>Lo sentimos, ha ocurrido un error</p>
+
+    {% include 'footer.html' %}
+</body>
+</html>

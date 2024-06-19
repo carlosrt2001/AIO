@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/task_form.css') }}">
+    <title>Task Form</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdeQr46XqTgVV10c3cp6jUkKX_1FbGCNA&libraries=places"></script>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <h2>Nueva Tarea</h2>
+    <form id="formCreateTask" method="POST" action="/{{ objective_id }}/task_form" onsubmit="return validateHours()">
+        <strong for="name">Nombre de la tarea:</strong>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <strong for="min_hours">Horas mínimas diarias:</strong>
+        <input type="number" id="min_hours" name="min_hours" min="1" value="1" required><br><br>
+
+        <strong for="max_hours">Horas máximas diarias:</strong>
+        <input type="number" id="max_hours" name="max_hours" min="1" value="1" required><br><br>
+
+        <strong for="location">Ubicación:</strong>
+        <input type="text" id="location" name="location"><br><br>
+
+        <div id="schedules">
+            <div class="schedule">
+                <strong for="day_of_week">Día de la semana:</strong>
+                <select name="day_of_week[]">
+                    <option value="LUNES">Lunes</option>
+                    <option value="MARTES">Martes</option>
+                    <option value="MIERCOLES">Miércoles</option>
+                    <option value="JUEVES">Jueves</option>
+                    <option value="VIERNES">Viernes</option>
+                    <option value="SABADO">Sábado</option>
+                    <option value="DOMINGO">Domingo</option>
+                </select>
+
+                <strong for="start_time">Horario: </strong>
+                <input type="time" name="start_time[]" required>
+
+                <strong for="end_time">- </strong>
+                <input type="time" name="end_time[]" required><br><br>
+            </div>
+        </div>
+
+        <button id="addDay" type="button" onclick="addSchedule()">Añadir Día</button>
+        <button id="removeDay" type="button" onclick="removeSchedule()">Quitar Día</button><br><br>
+
+        <button id="createTask" type="submit">Añadir Tarea</button>
+    </form>
+
+    <script src="{{ url_for('static', filename='js/task_form.js') }}"></script>
+
+    {% include 'footer.html' %}
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/footer.css') }}">
+    <title>Footer</title>
+</head>
+<body>
+    <footer>
+        <div class="column">
+            <h3 class="title">Accede a nuestras funcionalidades</h3>
+            <ul class="list">
+                <li><button class="item {% if active_page == 'main' %}active{% endif %}" onclick="location.href='/main'"><i class="fas fa-home"></i>Página Principal</button></li>
+                <li><button class="item {% if active_page == 'objectives' %}active{% endif %}" onclick="location.href='/objectives'"><i class="fas fa-bullseye"></i>Objetivos</button></li>
+                <li><button class="item {% if active_page == 'agenda' %}active{% endif %}" onclick="location.href='/agenda'"><i class="far fa-calendar-alt"></i>Agenda</button></li>
+                <li><button class="item {% if active_page == 'progress' %}active{% endif %}" onclick="location.href='/progress'"><i class="fas fa-chart-line"></i>Progreso</button></li>
+                <li><button class="item {% if active_page == 'inbox' %}active{% endif %}" onclick="location.href='/inbox'"><i class="fas fa-inbox"></i>Notificaciones</button></li>
+                <li><button class="item {% if active_page == 'profile' %}active{% endif %}" onclick="location.href='/profile'"><i class="fas fa-user"></i>Perfil</button></li>
+            </ul>
+        </div>
+        <div class="column">
+            <h3 class="title">Contáctanos</h3>
+            <ul class="list">
+                <li class="contact"><i class="far fa-envelope"></i>aio@gmail.com</li>
+                <li class="contact"><i class="fas fa-phone"></i>+34 666 666 666</li>
+            </ul>
+        </div>
+        <div class="column">
+            <h3 class="title">Síguenos en redes sociales</h3>
+            <ul class="list">
+                <li><button class="social-media" id="btnFacebook"><i class="fab fa-facebook" onclick="location.href='https://www.facebook.com/'"></i>Facebook</button></li>
+                <li><button class="social-media" id="btnInstagram"><i class="fab fa-instagram" onclick="location.href='https://www.instagram.com/'"></i>Instagram</button></li>
+                <li><button class="social-media" id="btnX"><i class="fab fa-twitter" onclick="location.href='https://twitter.com/?lang=es'"></i>X</button></li>
+                <li><button class="social-media" id="btnTikTok"><i class="fab fa-tiktok" onclick="location.href='https://www.tiktok.com/es/'"></i>TikTok</button></li>
+                <li><button class="social-media" id="btnYoutube"><i class="fab fa-youtube" onclick="location.href='https://www.youtube.com/'"></i>YouTube</button></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+</html>

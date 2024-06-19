@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/agenda.css') }}">
+    <title>Agenda</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      {% include 'header.html' %}
+      <h2>Mi Agenda</h2><br>
+
+      <div class="buttons">
+        <button id="activity" class="btnAdd"><i class="fas fa-plus-circle"></i>Añadir Actividad</button>
+        <button id="routine" class="btnAdd"><i class="far fa-calendar-plus"></i>Añadir Rutina</button>
+      </div>
+
+      <div class="container">
+        <div class="left">
+          <div class="calendar">
+            <div class="month">
+              <i class="fas fa-angle-left prev"></i>
+              <div class="date"></div>
+              <i class="fas fa-angle-right next"></i>
+            </div>
+            <div class="weekdays">
+              <div>Lun</div>
+              <div>Mar</div>
+              <div>Mié</div>
+              <div>Jue</div>
+              <div>Vie</div>
+              <div>Sáb</div>
+              <div>Dom</div>
+            </div>
+            <div class="days"></div>
+            <div class="goto-today">
+              <div class="goto">
+                <input type="text" placeholder="mm/aaaa" class="date-input" />
+                <button class="goto-btn">Ir</button>
+              </div>
+              <button class="today-btn">Hoy</button>
+            </div>
+          </div>
+        </div>
+        <div class="right">
+          <div class="today-date">
+            <div class="event-day"></div>
+            <div class="event-date"></div>
+          </div>
+          <div class="events"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="activityModal" class="modal">
+      <div class="modal-content">
+        <h2>Añadir Actividad</h2>
+        <form id="form-activity" action="/activity_form" method="POST">
+          <div class="input">
+            <label for="activity-name">Nombre de la actividad:</label>
+            <input type="text" id="activity-name" name="activity-name" required>
+          </div>
+          <div class="input">
+            <label for="activity-date">Fecha:</label>
+            <input type="date" id="activity-date" name="activity-date" required>
+          </div>
+          <div class="input">
+            <label for="activity-startTime">Hora de inicio:</label>
+            <input type="time" id="activity-startTime" name="activity-startTime" required>
+          </div>
+          <div class="input">
+            <label for="activity-endTime">Hora de finalización:</label>
+            <input type="time" id="activity-endTime" name="activity-endTime" required>
+          </div>
+          <div class="input">
+            <label for="activity-description">Descripción:</label>
+            <textarea id="activity-description" name="activity-description"></textarea>
+          </div>
+          <div class="input">
+            <label for="activity-color">Color:</label>
+            <input type="color" id="activity-color" name="activity-color" value="#ff9642"><br><br>
+          </div>
+
+          <div class="buttons-modal">
+              <button id="confirmActivity" class="modal-button" type="submit">Añadir</button>
+              <button id="cancelActivity" class="modal-button" type="button">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+    <div id="routineModal" class="modal">
+      <div class="modal-content">
+        <h2>Añadir Rutina</h2>
+        <form id="form-rutina" action="/routine_form" method="POST">
+          <div class="input">
+            <label for="routine-name">Nombre de la rutina:</label>
+            <input type="text" id="routine-name" name="routine-name" required>
+          </div>
+
+          <div id="schedules">
+            <div class="schedule">
+                <strong for="day_of_week">Día de la semana:</strong>
+                <select name="day_of_week[]">
+                    <option value="LUNES">Lunes</option>
+                    <option value="MARTES">Martes</option>
+                    <option value="MIERCOLES">Miércoles</option>
+                    <option value="JUEVES">Jueves</option>
+                    <option value="VIERNES">Viernes</option>
+                    <option value="SABADO">Sábado</option>
+                    <option value="DOMINGO">Domingo</option>
+                </select>
+
+                <strong for="start_time">Horario: </strong>
+                <input type="time" name="start_time[]" required>
+
+                <strong for="end_time">- </strong>
+                <input type="time" name="end_time[]" required><br><br>
+            </div>
+          </div>
+
+          <div class="modifyDays">
+            <button id="addDay" type="button" onclick="addSchedule()">Añadir Día</button>
+            <button id="removeDay" type="button" onclick="removeSchedule()">Quitar Día</button><br><br>
+          </div>
+
+          <div class="input">
+            <label for="routine-description">Descripción:</label>
+            <textarea id="routine-description" name="routine-description"></textarea>
+          </div>
+
+          <div class="input">
+            <label for="routine-color">Color:</label>
+            <input type="color" id="routine-color" name="routine-color" value="#b7edff"><br><br>
+          </div>
+
+          <div class="buttons-modal">
+              <button id="confirmRoutine" class="modal-button" type="submit">Añadir</button>
+              <button id="cancelRoutine" class="modal-button" type="button">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="deleteActivityModal" class="modal">
+        <div class="modal-content">
+            <p>¿Seguro que deseas eliminar esta actividad o rutina?</p>
+            <button id="confirmDelete" class="modal-button">Eliminar</button>
+            <button id="cancelDelete" class="modal-button">Cancelar</button>
+        </div>
+    </div>
+
+    <div id="agenda-colorPick">
+      <strong for="color">Color de la agenda:</strong>
+      <input type="color" id="color" name="color" value="{{ agenda_color }}"><br><br>
+      <button onclick="updateAgendaColor(document.getElementById('color').value)">Aplicar</button>
+    </div>
+
+
+    <script src="{{ url_for('static', filename='js/agenda.js') }}"></script>
+
+    {% include 'footer.html' %}
+
+  <style>
+      :root {
+        --agenda-color: {{ agenda_color }};
+      }
+  </style>
+  </body>
+</html>

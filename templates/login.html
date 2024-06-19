@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/login.css') }}">
+    <title>Log In</title>
+</head>
+<body>
+    <a href="/" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+    <div class="wrapper">
+        <form id="formLogin" method="post" action="/login">
+            <h2>Inicia Sesión</h2>
+            <label for="user">Nombre de usuario o correo electrónico:</label>
+            <input type="text" id="user" name="user" required><br><br>
+
+
+            <label for="password">Contraseña:</label>
+            <div class="password-container">
+                <input type="password" id="password" name="password" required><br><br>
+                <i id="eye1" class="fas fa-eye toggle-password" onclick="togglePassword('password', 'eye1')"></i>
+            </div><br><br>
+
+
+
+            <p id="message">{{ message }}</p><br><br>
+
+            <button type="submit">Inicia Sesión</button><br>
+            <p>¿Aún no tienes una cuenta?</p>
+            <button class="btn-gotoRegister" onclick="window.location.href='/register'">Regístrate</button>
+
+        </form>
+    </div>
+
+    {% include 'footer.html' %}
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</body>
+</html>

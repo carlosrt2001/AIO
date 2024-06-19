@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/objective_form.css') }}">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <title>Objective Form</title>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <h2>Nuevo Objetivo</h2>
+    <form id="formObjective" method="post" enctype="multipart/form-data" action="/objective_form">
+        <strong for="name">Nombre del objetivo:</strong>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <strong for="objective_image">Imagen del objetivo:</strong>
+        <img id="objective_image" style="display: none;"><br>
+        <input type="file" name="imageInput" id="imageInput" accept="image/*"><br><br><br>
+
+        <strong for="color">Color del objetivo:</strong>
+        <input type="color" id="color" name="color" value="#2eb19f"><br><br>
+
+        <strong for="priority">Prioridad:</strong>
+        <select id="priority" name="priority">
+            <option value="Alta">Alta</option>
+            <option value="Media" selected>Media</option>
+            <option value="Baja">Baja</option>
+        </select><br><br>
+
+        <strong for="hours">Horas semanales:</strong>
+        <input type="number" id="hours" name="hours" min="1" value="1" required><br><br>
+
+        <strong for="start_date">Fecha de inicio:</strong>
+        <input type="date" id="start_date" name="start_date"><br><br>
+
+        <strong for="end_date">Fecha de finalización:</strong>
+        <input type="date" id="end_date" name="end_date"><br><br>
+
+        <button id="createObjective" type="submit">Crear Objetivo</button>
+    </form>
+
+
+    <script src="{{ url_for('static', filename='js/objective_form.js') }}"></script>
+
+    {% include 'footer.html' %}
+</body>
+
+</html>

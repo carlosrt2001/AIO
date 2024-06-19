@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <title>Main</title>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <div class="welcome_username-container">
+        <h2 id="welcome">Hola,</h2>
+        <h2 id="username">{{ user.username }}</h2>
+    </div>
+
+    <div class="info">
+        <div class="function" onclick="location.href='/objectives'">
+            <div class="icon">
+                <button id="objectivesButton" class="function-icon"><i class="fas fa-bullseye"></i></button>
+            </div>
+            <div class="text">
+                <h3>Objetivos</h3>
+                <p>Establece tus objetivos. A cada objetivo, añádele tareas para que se apliquen de manera automática e inteligente a tu agenda.</p>
+            </div>
+        </div>
+
+        <div class="function" onclick="location.href='/agenda'">
+            <div class="icon">
+                <button id="agendaButton" class="function-icon"><i class="far fa-calendar-alt"></i></button>
+            </div>
+            <div class="text">
+                <h3>Agenda</h3>
+                <p>Consulta tu agenda. Podrás ver la asignación automática de las tareas para cumplir tus objetvios. También podrás añadir a cada día las actividades puntuales o tus rutinas.</p>
+            </div>
+        </div>
+
+        <div class="function" onclick="location.href='/report'">
+            <div class="icon">
+                <button id="reportButton" class="function-icon" onclick="location.href='/report'"><i class="fas fa-chart-line"></i></button>
+            </div>
+            <div class="text">
+                <h3>Progreso</h3>
+                <p>Monitoriza el progreso de cada uno de tus objetivos. Podrás consultar cuántas tareas has completado, los días que te quedan para cumplir tu objetivo y el grado de satisfacción de tu objetivo.</p>
+            </div>
+        </div>
+
+        <div class="function" onclick="location.href='/inbox'">
+            <div class="icon">
+                <button id="inboxButton" class="function-icon" onclick="location.href='/inbox'"><i class="fas fa-inbox"></i></button>
+            </div>
+            <div class="text">
+                <h3>Notificaciones</h3>
+                <p>Recibe todas las alertas y notificaciones en tu bandeja de entrada para que no estés al tanto en todo momento de cuando un objetivo está a punto de expirar.</p>
+            </div>
+        </div>
+
+        <div class="function" onclick="location.href='/profile'">
+            <div class="icon">
+                <button id="profileButton" class="function-icon"><i class="fas fa-user"></i></button>
+            </div>
+            <div class="text">
+                <h3>Perfil</h3>
+                <p>Visualiza y edita tus datos. Además, podrás cerrar sesión o eliminar tu cuenta.</p>
+            </div>
+        </div>
+
+
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+</html>
