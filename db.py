@@ -54,7 +54,6 @@ class Task(db.Model):
     objective_id = db.Column(db.Integer, db.ForeignKey('objectives.id'), nullable=False)
     schedules = db.relationship('TaskSchedule', backref='task', cascade='all, delete-orphan')
 
-
 # Representation of the schedules of a task
 class TaskSchedule(db.Model):
     __tablename__ = 'task_schedules'
@@ -109,7 +108,6 @@ class Notification(db.Model):
     description = db.Column(db.Text, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user = db.relationship('User', backref=db.backref('notifications', lazy=True, cascade="all, delete"))
-
 
 # Representation of a task assigned by the planification algorithm
 class AllocatedTask(db.Model):

@@ -444,6 +444,7 @@ def agenda(offset=0):
     ).all()
 
     tasks = AllocatedTask.query.filter(
+        AllocatedTask.user_id == user_id,
         AllocatedTask.date.between(start_of_week, end_of_week)
     ).all()
 
@@ -915,6 +916,7 @@ def delete_account():
                 db.session.delete(routine)
             for objective in user.objectives:
                 for task in objective.tasks:
+                    AllocatedTask.query.filter_by(task_id=task.id).delete()
                     db.session.delete(task)
 
 
