@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/privacy_policy.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Privacy Policy</title>
+</head>
+<body>
+    <h2>Política de Privacidad</h2>
+
+    <button class="return-button" onclick="window.location.href='/agenda/0'" aria-label="Salir de la Política de Privacidad">Volver</button>
+
+    <h3>Titular y contacto</h3>
+    <p>Siguiendo la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y
+        garantía de los derechos digitales, el titular de este sitio web es
+        Carlos Octavio Rodríguez del Toro, con N.I.F. 45344594W y correo electrónico
+        carlos.rodriguez153@alu.ulpgc.es.</p>
+
+    <h3>¿Qué datos recopilamos?</h3>
+    <p>Los datos personales que recopilamos <strong>no son obligatorios</strong>. Éstos son:
+    <br>-Tu correo electrónico.
+    <br>-Tu número de teléfono.
+    <br>-Las imágenes que cargas.</p>
+
+    <h3>¿Para qué recopilamos estos datos?</h3>
+    <p>Tu correo electrónico lo podrás utilizar para iniciar sesión en caso de haber olvidado
+        tu nombre de usuario. Además, si introduces el correo
+        electrónico, podrás iniciar el proceso para recuperar tu contraseña en caso de haberla
+        olvidado o querer modificarla. Por último, podrás usar tanto el correo como el número
+        de teléfono para exportar tu agenda via email o whatsapp.</p>
+
+    <p>Por su parte, las imágenes que subas como foto de perfil o imagen de objetivo al crear un
+    objetivo, se utilizarán simplemente para personalizar tu experiencia en esta web.</p>
+
+    <h3>Conservación de los datos</h3>
+    <p>Los datos aportados por un usuario se conservarán indefinidamente en la base de datos de la
+    aplicación hasta que la cuenta sea eliminada. En ese momento, todos los datos del usuario serán
+    borrados permanentemente.</p>
+
+    <h3>Derechos</h3>
+    <p>Todos los usuarios tendrán los siguientes derechos:
+    <br>-Derecho de acceso.
+    <br>-Derecho de rectificación.
+    <br>-Derecho de supresión.
+    <br>-Derecho a la limitación del tratamiento.
+    <br>-Derecho a la portabilidad.
+    <br>-Derecho de oposición.</p>
+
+    <p>Para ejercer cualquiera de estos derechos, el usuario podrá solicitarlo enviando una solicitud
+    a <strong>infoagenda.aio@gmail.com</strong></p>
+
+    <h3>Medidas de seguridad</h3>
+    <p>Se han adoptado todas las medidas de seguridad posibles para tratar de garantizar la
+    seguridad de todos los datos de un usuario almacenados en nuestra base de datos.</p>
+
+    <h3>Cambios en la Política de Privacidad</h3>
+    <p>La Política de Privacidad de esta aplicación web podrá ser modificada para adaptarse a
+    cambios en la legislación o por la mejora o cambio en nuestro servicio. En caso de existir un
+    cambio, éste se notificará a través de este sitio web.</p>
+
+    <br><p>Esta Política de Privacidad se actualizó por última vez el 2 de enero de 2025.</p>
+
+    {% include 'footer.html' %}
+
+
+</body>
+</html>

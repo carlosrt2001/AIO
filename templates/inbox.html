@@ -9,6 +9,15 @@
 <body>
     {% include 'header.html' %}
 
+    <button class="info-button" onclick="openModal()" aria-label="Abrir panel de información">i</button>
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <h4>Ayuda</h4>
+            <p>Recibe todas las alertas y notificaciones en tu bandeja de entrada para que estés al tanto en todo momento. Podrás eliminar una o todas las notificaciones si vacías la bandeja de entrada.</p>
+            <button id="closeModal" class="modal-button" type="button" aria-label="Cerrar panel de información">Cerrar</button>
+        </div>
+    </div>
+
     <h2>Mis Notificaciones</h2>
 
     <ul id="notifications">
@@ -17,20 +26,20 @@
             <strong>{{ notification.title }}</strong><br>
             <span>{{ notification.date.strftime('%d/%m/%Y') }} {{ notification.time.strftime('%H:%M') }}</span><br>
             <p>{{ notification.description }}</p>
-            <button class="deleteNotification" data-notification-id="{{ notification.id }}"><i class="fas fa-trash-alt"></i>Eliminar</button>
+            <button class="deleteNotification" data-notification-id="{{ notification.id }}"><i class="fas fa-trash-alt" aria-label="Eliminar notificación"></i>Eliminar</button>
         </li>
         {% endfor %}
     </ul>
 
     <form id="deleteAllNotificationsForm" action="/inbox/delete_all_notifications" method="post">
-        <button type="button" id="openConfirmationModal"><i class="fas fa-trash-alt"></i>Vaciar Bandeja de Entrada</button>
+        <button type="button" id="openConfirmationModal"><i class="fas fa-trash-alt" aria-label="Vaciar la bandeja de entrada"></i>Vaciar Bandeja de Entrada</button>
     </form>
 
     <div id="confirmationModal" class="modal">
         <div class="modal-content">
-            <p>¿Estás seguro de que quieres vaciar la bandeja de entrada? Esto eliminará todas las notificaciones</p>
-            <button id="confirmDeleteAllNotifications" class="modal-button">Vaciar</button>
-            <button id="cancelDeleteAllNotifications" class="modal-button">Cancelar</button>
+            <p>¿Estás seguro de que quieres vaciar la bandeja de entrada? Se eliminarán todas las notificaciones</p>
+            <button id="confirmDeleteAllNotifications" class="modal-button" aria-label="Confirmar vaciado de la bandeja de entrada">Vaciar</button>
+            <button id="cancelDeleteAllNotifications" class="modal-button" aria-label="Cancelar vaciado de la bandeja de entrada">Cancelar</button>
         </div>
     </div>
 
@@ -38,8 +47,8 @@
     <div id="deleteNotificationModal" class="modal">
         <div class="modal-content">
             <p>¿Estás seguro de que quieres eliminar esta notificación?</p>
-            <button id="confirmDeleteNotification" class="modal-button">Eliminar</button>
-            <button id="cancelDeleteNotification" class="modal-button">Cancelar</button>
+            <button id="confirmDeleteNotification" class="modal-button" aria-label="Confirmar eliminación de la notificación">Eliminar</button>
+            <button id="cancelDeleteNotification" class="modal-button" aria-label="Cancelar eliminación de la notificación">Cancelar</button>
         </div>
     </div>
 

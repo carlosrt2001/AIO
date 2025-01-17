@@ -9,7 +9,66 @@
 <body>
     {% include 'header.html' %}
 
+    <button class="info-button" onclick="openModal()" aria-label="Abrir panel de información">i</button>
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <h4>Ayuda</h4>
+            <p>Monitoriza el progreso de cada uno de tus objetivos. Podrás consultar los días que te quedan para cumplir tu objetivo, cuántas tareas has completado o cuántas horas llevas dedicadas a cada tarea.</p>
+            <button id="closeModal" class="modal-button" type="button" aria-label="Cerrar panel de información">Cerrar</button>
+        </div>
+    </div>
+
     <h2>Mi Progreso</h2>
+
+    <div id="objectives-progress-container">
+        <div id="totals-container">
+            <span>Total de Objetivos: <strong>{{ total_objectives }}</strong></span><br>
+            <span>Total de Objetivos Completados: <strong>{{ completed_objectives }}</strong></span><br>
+        </div>
+        <div id="percentage-container">
+            <span>% de Objetivos Completados:</span>
+            <svg width="120" height="120" viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="50" stroke="#ddd" stroke-width="10" fill="none" />
+                <circle cx="60" cy="60" r="50" stroke="#4caf50" stroke-width="10" fill="none"
+                    stroke-dasharray="314" stroke-dashoffset="{{ 314 - (314 * completed_percentage / 100) }}"
+                    style="transition: stroke-dashoffset 0.5s ease;" />
+                <text x="60" y="65" text-anchor="middle" font-size="20" fill="#000">
+                    {{ completed_percentage|round(2) }}%
+                </text>
+            </svg>
+        </div>
+    </div>
+
+    {% for objective in objectives %}
+        <div id="objective-container" style="border: 5px solid {{ objective.color }}">
+            <div id="objective-info">
+                <h3>{{ objective.name }}</h3>
+                <p>{{ objective.start_date.strftime('%d/%m/%Y') }} - {{ objective.end_date.strftime('%d/%m/%Y') }}</p>
+                <p id="status">{{ objectives_status[objective.id] }}</p>
+                <ul>
+                    {% for task in objective.tasks %}
+                        <li id="tasks">
+                            <strong id="task_name">{{ task.name }}</strong>
+                            <p>Tareas completadas: {{ task_count_map.get(task.id, 0) }}<br>
+                                Horas totales dedicadas: {{ task_hours_map.get(task.id, 0) }}</p><br>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div id="objective-image">
+                {% if objective.image %}
+                    <img class="objective_image" src="{{ url_for('static', filename='images/objectives/' + objective.image) }}"
+                    alt="Imagen asociada al objetivo '{{ objective.name }}'">
+                {% else %}
+                    <img class="objective_image" src="{{ url_for('static', filename='images/objective.png') }}"
+                    alt="Imagen genérica para objetivos'">
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+
+
+    <script src="{{ url_for('static', filename='js/progress.js') }}"></script>
 
     {% include 'footer.html' %}
 </body>

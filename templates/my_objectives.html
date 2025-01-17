@@ -9,29 +9,136 @@
 <body>
     {% include 'header.html' %}
 
+    <button class="info-button" onclick="openModal()" aria-label="Abrir panel de información">i</button>
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <h4>Ayuda</h4>
+            <p>Establece tus objetivos. A cada objetivo, añádele tareas para que se apliquen de manera automática e inteligente a tu agenda. Puedes crear un número ilimitado de objetivos.</p>
+            <h4>OBJETIVOS</h4>
+            <p>Los objetivos son las metas que tienes en tu vida. Crea un número indefinido de objetivos y a cada uno, añádele tareas para que se planifiquen en tu agenda.</p>
+            <p>Los objetivos se dividirán en 4 categorías:</p>
+            <strong>Objetivos Actuales</strong><br><span>Objetivos que aún no has completado y están actualmante en curso.</span><br><br>
+            <strong>Objetivos Completados</strong><br><span>Objetivos que han sido marcados como completados. No importa si están en curso o no. Las tareas de estos objetivos no se planificarán en la agenda.</span><br><br>
+            <strong>Objetivos Pasados</strong><br><span>Objetivos que no han sido marcados como completados y su fecha de finalización ya ha pasado. No se mostrarán en la planificación</span><br><br>
+            <strong>Objetivos Futuros</strong><br><span>Objetivos que no han sido marcados como completados y su fecha de inicio aún no ha llegado. Se empezarán a mostrar en la planificación una vez llegue su fecha de inicio.</span><br><br>
+            <p>Los campos obligatorios a rellenar para CREAR UN OBJETIVO serán:</p>
+            <strong>Nombre del objetivo</strong><br><span>Título o descripción del objetivo.</span><br><br>
+            <strong>Color del objetivo</strong><br><span>Por defecto, será de color verde. Edita el color a cada objetivo para diferenciarlo en la pantalla de objetivos y en la agenda.</span><br><br>
+            <strong>Prioridad</strong><br><span>Selecciona un valor de prioridad entre 0 y 100. Basado en los valores de prioridad de tus objetivos, el algoritmo asignará las tareas a tu agenda de la forma más óptima.</span><br><br>
+            <strong>Horas semanales</strong><br><span>El número de horas semanales que se estima o se desea dedicar al objetivo ayudará a determinar la distribución de las tareas de objetivo en la agenda.</span><br><br>
+            <strong>Fecha de inicio</strong><br><span>Establece la fecha en la que quieres empezar a realizar tareas para completar un objetivo.</span><br><br>
+            <strong>Fecha de finalización</strong><br><span>Indica la fecha límite que tienes para completar el objetivo propuesto.</span><br><br>
+            <p>El único campo que no es obligatrio es:</p>
+            <strong>Imagen del objetivo</strong><br><span>Asigna a un objetivo una imagen para tu página de objetivos esté lo más personalizada posible.</span><br><br>
+            <h4>TAREAS</h4>
+            <span>Una vez creado el objetivo, podrás añadir tareas para completar el objetivo.</span>
+            <span>Las tareas que componen un objetivo serán las que se muestren en la agenda.</span>
+            <strong>En caso de que tu objetivo sea directamente la tarea a realizar, crea la tarea dentro del objetivo para que se pueda plasmar en la agenda.</strong>
+            <p>Los campos obligatorios a rellenar para CREAR UNA TAREA serán:</p>
+            <strong>Nombre de la tarea</strong><br><span>Título o descripción de la tarea.</span><br><br>
+            <strong>Prioridad</strong><br><span>Selecciona un valor de prioridad entre 0 y 100. Basado en los valores de prioridad de las demás tareas de tu objetivo, el algoritmo asignará las tareas a tu agenda de la forma más óptima.</span><br><br>
+            <strong>Horas mínimas diarias</strong><br><span>Selecciona el número mínimo de horas que le podrás dedicar a una tarea en un día.</span><br><br>
+            <strong>Horas máximas diarias</strong><br><span>Selecciona el número máximo de horas que le podrás dedicar a una tarea en un día.</span><br><br>
+            <strong>Día de la semana y Horario</strong><br><span>Selecciona los días de la semana y el rango de horas del día en los que podrás realizar la tarea.</span><br><br>
+            <p>El único campo que no es obligatrio es:</p>
+            <strong>Ubicación</strong><br><span>Lugar en el que se desarrolla la tarea.</span><br>
+            <h4>EDITAR Y ELIMINAR</h4>
+            <span>Se podrán editar los parámetros y eliminar de forma permanente los objetivos y tareas creados.</span><br><br>
+            <span>Para marcar o desmarcar un objetivo como <strong>completado</strong>, esto se deberá hacer en el cuadro de edición del objetivo.</span><br><br>
+            <button id="closeModal" class="modal-button" type="button" aria-label="Cerrar panel de información">Cerrar</button>
+        </div>
+    </div>
+
     <h2>Mis Objetivos</h2>
 
-    <button id="btnAddObjective"><i class="fas fa-plus"></i>Crear Objetivo</button>
+    <button id="btnAddObjective"><i class="fas fa-plus" aria-label="Crear un objetivo"></i>Crear Objetivo</button>
 
-    {% if objectives %}
-        <ul id="objectives">
-            {% for objective in objectives %}
-                <button class="btnObjective" data-id="{{ objective.id }}" style="background-color: {{ objective.color }};">
+    <h3>Objetivos Actuales</h3>
+    {% if objectives_current %}
+        <ul class="objectives">
+            {% for objective in objectives_current %}
+                <button class="btnObjective" data-id="{{ objective.id }}" style="background-color: {{ objective.color }};" aria-label="Ir al objetivo actual '{{ objective.name }}'">
                     <div class="image-container">
                         {% if objective.image %}
-                            <img class="objective_image" src="{{ url_for('static', filename='images/objectives/' + objective.image) }}">
+                            <img class="objective_image" src="{{ url_for('static', filename='images/objectives/' + objective.image) }}" alt="Imagen asociada al objetivo '{{ objective.name }}'">
                         {% else %}
-                            <img class="objective_image" src="{{ url_for('static', filename='images/objective.png') }}">
+                            <img class="objective_image" src="{{ url_for('static', filename='images/objective.png') }}" alt="Imagen genérica de objetivo">
                         {% endif %}
                     </div>
                     <div class="text-container">
-                        <p id="objective_name">{{ objective.name }}</p>
+                        <p class="objective_name">{{ objective.name }}</p>
                     </div>
                 </button>
             {% endfor %}
         </ul>
     {% else %}
-            <p id="no_objectives">¡Crea tu primer objetivo!</p>
+        <p class="no_objectives">No tienes objetivos actuales.</p>
+    {% endif %}
+
+    <h3>Objetivos Completados</h3>
+    {% if objectives_completed %}
+        <ul class="objectives">
+            {% for objective in objectives_completed %}
+                <button class="btnObjective" data-id="{{ objective.id }}" style="background-color: {{ objective.color }};" aria-label="Ir al objetivo completado '{{ objective.name }}'">
+                    <div class="image-container">
+                        {% if objective.image %}
+                            <img class="objective_image" src="{{ url_for('static', filename='images/objectives/' + objective.image) }}" alt="Imagen asociada al objetivo '{{ objective.name }}'">
+                        {% else %}
+                            <img class="objective_image" src="{{ url_for('static', filename='images/objective.png') }}" alt="Imagen genérica de objetivo">
+                        {% endif %}
+                    </div>
+                    <div class="text-container">
+                        <p class="objective_name">{{ objective.name }}</p>
+                    </div>
+                </button>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="no_objectives">No tienes objetivos completados.</p>
+    {% endif %}
+
+    <h3>Objetivos Pasados</h3>
+    {% if objectives_past %}
+        <ul class="objectives">
+            {% for objective in objectives_past %}
+                <button class="btnObjective" data-id="{{ objective.id }}" style="background-color: {{ objective.color }};" aria-label="Ir al objetivo pasado '{{ objective.name }}'">
+                    <div class="image-container">
+                        {% if objective.image %}
+                            <img class="objective_image" src="{{ url_for('static', filename='images/objectives/' + objective.image) }}" alt="Imagen asociada al objetivo '{{ objective.name }}'">
+                        {% else %}
+                            <img class="objective_image" src="{{ url_for('static', filename='images/objective.png') }}" alt="Imagen genérica de objetivo">
+                        {% endif %}
+                    </div>
+                    <div class="text-container">
+                        <p class="objective_name">{{ objective.name }}</p>
+                    </div>
+                </button>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="no_objectives">No tienes objetivos pasados.</p>
+    {% endif %}
+
+    <h3>Objetivos Futuros</h3>
+    {% if objectives_future %}
+        <ul class="objectives">
+            {% for objective in objectives_future %}
+                <button class="btnObjective" data-id="{{ objective.id }}" style="background-color: {{ objective.color }};" aria-label="Ir al objetivo futuro '{{ objective.name }}'">
+                    <div class="image-container">
+                        {% if objective.image %}
+                            <img class="objective_image" src="{{ url_for('static', filename='images/objectives/' + objective.image) }}" alt="Imagen asociada al objetivo '{{ objective.name }}'">
+                        {% else %}
+                            <img class="objective_image" src="{{ url_for('static', filename='images/objective.png') }}" alt="Imagen genérica de objetivo">
+                        {% endif %}
+                    </div>
+                    <div class="text-container">
+                        <p class="objective_name">{{ objective.name }}</p>
+                    </div>
+                </button>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="no_objectives">No tienes objetivos futuros.</p>
     {% endif %}
 
     <script src="{{ url_for('static', filename='js/my_objectives.js') }}"></script>

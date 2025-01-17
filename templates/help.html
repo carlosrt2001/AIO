@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/help.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Help</title>
+</head>
+<body>
+    <h2>Ayuda</h2>
+
+    <button class="return-button" onclick="window.location.href='/agenda/0'" aria-label="Salir de página de ayuda">Volver</button>
+
+    <div class="info">
+        <div class="function" onclick="location.href='/register'">
+            <div class="icon">
+                <button id="registerButton" class="function-icon" aria-label="Ir a registro"><i class="fas fa-user-plus"></i></button>
+            </div>
+            <div class="text">
+                <h3>Registrarse</h3>
+                <p>Regístrate de forma totalmente gratuita en la aplicación web. Para ello tan solo tendrás que rellenar los siguientes campos obligatorios del formulario:</p>
+                <strong>Nombre de usuario</strong><span>Nombre único con el que se te identificará en la aplicación.</span><br>
+                <strong>Contraseña</strong><span>Contraseña para acceder a tu cuenta.</span><br>
+                <strong>Confirmar Contraseña</strong><span>Vuelve a introducir la contraseña con el fin de asegurar que no hay ningún error.</span><br>
+                <strong>La contraseña debe cumplir las siguientes condiciones:</strong>
+                <span>La contraseña debe contener mínimo 8 caracteres.</span>
+                <span>La contraseña debe contener al menos una letra mayúscula.</span>
+                <span>La contraseña debe contener al menos una letra minúscula.</span>
+                <span>La contraseña debe contener al menos un número.</span>
+                <span>La contraseña debe contener al menos un símbolo: !@#$%^&*(),.?:{}|<></span>
+                <span>La contraseña no puede contener el nombre de usuario.</span><br>
+                <span>Además, puedes añadir los siguientes campos opcionales:</span><br>
+                <strong>Foto de perfil</strong><span>Imagen para personalizar tu perfil.</span><br>
+                <strong>Correo electrónico</strong><span>Dirección de correo electrónico para recuperar la contraseña o exportar tu agenda.</span><br>
+                <strong>Teléfono</strong><span>Número de teléfono para exportar tu agenda a través de Whatsapp.</span><br>
+                <strong>El correo electrónico y el teléfono los podrás añadir editando el perfil más adelante. También podrás actualizar tu nombre de usuario.</strong><br>
+                <span>Se deberá marcar la casilla de verificación aceptando la Política de Privacidad.</span>
+            </div>
+        </div>
+
+        <div class="function" onclick="location.href='/login'">
+            <div class="icon">
+                <button id="loginButton" class="function-icon" aria-label="Ir a inicio de sesión"><i class="fas fa-sign-in-alt"></i></button>
+            </div>
+            <div class="text">
+                <h3>Iniciar Sesión</h3>
+                <p>Si ya te has registrado, accede a tu cuenta introduciendo tu nombre de usuario o correo electrónico además de la contraseña.</p>
+            </div>
+        </div>
+
+        <div class="function" onclick="location.href='/objectives'">
+            <div class="icon">
+                <button id="objectivesButton" class="function-icon" aria-label="Ir a objetivos"><i class="fas fa-bullseye"></i></button>
+            </div>
+            <div class="text">
+                <h3>Objetivos</h3>
+                <p>Establece tus objetivos. A cada objetivo, añádele tareas para que se apliquen de manera automática e inteligente a tu agenda. Puedes crear un número ilimitado de objetivos.</p>
+                <h4>OBJETIVOS</h4>
+                <p>Los objetivos son las metas que tienes en tu vida. Crea un número indefinido de objetivos y a cada uno, añádele tareas para que se planifiquen en tu agenda.</p>
+                <p>Los objetivos se dividirán en 4 categorías:</p>
+                <strong>Objetivos Actuales</strong><span>Objetivos que aún no has completado y están actualmante en curso.</span><br>
+                <strong>Objetivos Completados</strong><span>Objetivos que han sido marcados como completados. No importa si están en curso o no. Las tareas de estos objetivos no se planificarán en la agenda.</span><br>
+                <strong>Objetivos Pasados</strong><span>Objetivos que no han sido marcados como completados y su fecha de finalización ya ha pasado. No se mostrarán en la planificación</span><br>
+                <strong>Objetivos Futuros</strong><span>Objetivos que no han sido marcados como completados y su fecha de inicio aún no ha llegado. Se empezarán a mostrar en la planificación una vez llegue su fecha de inicio.</span><br>
+                <p>Los campos obligatorios a rellenar para CREAR UN OBJETIVO serán:</p>
+                <strong>Nombre del objetivo</strong><span>Título o descripción del objetivo.</span><br>
+                <strong>Color del objetivo</strong><span>Por defecto, será de color verde. Edita el color a cada objetivo para diferenciarlo en la pantalla de objetivos y en la agenda.</span><br>
+                <strong>Prioridad</strong><span>Selecciona un valor de prioridad entre 0 y 100. Basado en los valores de prioridad de tus objetivos, el algoritmo asignará las tareas a tu agenda de la forma más óptima.</span><br>
+                <strong>Horas semanales</strong><span>El número de horas semanales que se estima o se desea dedicar al objetivo ayudará a determinar la distribución de las tareas de objetivo en la agenda.</span><br>
+                <p>Los campos no obligatorios son:</p>
+                <strong>Imagen del objetivo</strong><span>Asigna a un objetivo una imagen para tu página de objetivos esté lo más personalizada posible.</span><br>
+                <strong>Fecha de inicio</strong><span>Establece la fecha en la que quieres empezar a realizar tareas para completar un objetivo.</span><br>
+                <strong>Fecha de finalización</strong><span>Indica la fecha límite que tienes para completar el objetivo propuesto.</span><br><br>
+                <h4>TAREAS</h4>
+                <span>Una vez creado el objetivo, podrás añadir tareas para completar el objetivo.</span>
+                <span>Las tareas que componen un objetivo serán las que se muestren en la agenda.</span>
+                <strong>En caso de que tu objetivo sea directamente la tarea a realizar, crea la tarea dentro del objetivo para que se pueda plasmar en la agenda.</strong>
+                <p>Los campos obligatorios a rellenar para CREAR UNA TAREA serán:</p>
+                <strong>Nombre de la tarea</strong><span>Título o descripción de la tarea.</span><br>
+                <strong>Prioridad</strong><span>Selecciona un valor de prioridad entre 0 y 100. Basado en los valores de prioridad de las demás tareas de tu objetivo, el algoritmo asignará las tareas a tu agenda de la forma más óptima.</span><br>
+                <strong>Horas mínimas diarias</strong><span>Selecciona el número mínimo de horas que le podrás dedicar a una tarea en un día.</span><br>
+                <strong>Horas máximas diarias</strong><span>Selecciona el número máximo de horas que le podrás dedicar a una tarea en un día.</span><br>
+                <strong>Día de la semana y Horario</strong><span>Selecciona los días de la semana y el rango de horas del día en los que podrás realizar la tarea.</span><br>
+                <p>El único campo que no es obligatrio es:</p>
+                <strong>Ubicación</strong><span>Lugar en el que se desarrolla la tarea.</span><br>
+                <h4>EDITAR Y ELIMINAR</h4>
+                <span>Se podrán editar los parámetros y eliminar de forma permanente los objetivos y tareas creados.</span>
+                <span>Para marcar o desmarcar un objetivo como <strong>completado</strong>, esto se deberá hacer en el cuadro de edición del objetivo.</span>
+            </div>
+        </div>
+
+        <div class="function" onclick="location.href='/agenda'">
+            <div class="icon">
+                <button id="agendaButton" class="function-icon" aria-label="Ir a agenda"><i class="far fa-calendar-alt"></i></button>
+            </div>
+            <div class="text">
+                <h3>Agenda</h3>
+                <p>Consulta tu agenda. Podrás ver la asignación automática de las tareas para cumplir tus objetvios. También podrás añadir a cada día las actividades puntuales o tus rutinas.</p>
+                <h4>ACTIVIDAD</h4>
+                <strong>Una ACTIVIDAD será aquel evento que se realizará una única vez.</strong>
+                <span>Por ejemplo, 'Recoger el coche del taller'.</span><br>
+                <span>Todos los campos para AÑADIR ACTIVIDAD serán obligatorios:</span><br>
+                <strong>Nombre de la actividad</strong><span>Título de la actividad.</span><br>
+                <strong>Fecha</strong><span>Día en el que se va a realizar la actividad.</span><br>
+                <strong>Hora de inicio</strong><span>Hora en la que comienza la actividad.</span><br>
+                <strong>Hora de finalización</strong><span>Hora de conclusión de la actividad.</span><br>
+                <strong>Color</strong><span>Color con el que se representará la actividad en la agenda. Por defecto, será de color naranja.</span><br><br>
+                <span>El campo opcional que no es obligatorio completar:</span><br>
+                <strong>Descripción</strong><span>Descrpición o información adicional de la actividad.</span><br>
+                <h4>RUTINA</h4>
+                <strong>Una RUTINA será aquel evento que se repetirá periódicamente ciertos días de la semana en una franja horaria.</strong>
+                <span>Por ejemplo, 'Ir a trabajar'.</span><br>
+                <span>Todos los campos para AÑADIR RUTINA serán obligatorios:</span><br>
+                <strong>Nombre de la rutina</strong><span>Título de la rutina.</span><br>
+                <strong>Día de la semana y Horario</strong><span>Días en los que se va a realizar el evento y su franja horaria. Se podrán añadir y quitar todos los días necesarios.</span><br>
+                <strong>Color</strong><span>Color con el que se representará la rutina en la agenda. Por defecto, será de color azul marino.</span><br><br>
+                <span>El campo opcional que no es obligatorio completar:</span><br>
+                <strong>Descripción</strong><span>Descripición o información adicional de la rutina.</span><br>
+                <h4>PLANIFICAR</h4>
+                <span>El botón para planificar hará la asignación de tareas en los días restantes de la semana (hasta el domingo) y la semana siguiente. En caso de ya existir una asignación de tareas, éstas se sobreescibirán.</span><br>
+                <h4>ELIMINAR EVENTOS</h4>
+                <span>Una vez añadidos a la agenda una actividad o una rutina, éstas no se podrán editar pero sí eliminar.</span>
+                <span>Para eliminar una actividad o rutina, se deberá hacer clic en el icono del contenedor del evento en la agenda.</span>
+                <strong>No se podrá eliminar un único evento de una rutina sino la rutina completa.</strong>
+                <h4>COLOR DE LA AGENDA</h4>
+                <span>Se podrá actualizar el color de la agenda en cualquier momento. Por defecto, será de color verde.</span>
+            </div>
+        </div>
+
+        <div class="function" onclick="location.href='/progress'">
+            <div class="icon">
+                <button id="progressButton" class="function-icon" onclick="location.href='/progress'" aria-label="Ir a progreso"><i class="fas fa-chart-line"></i></button>
+            </div>
+            <div class="text">
+                <h3>Progreso</h3>
+                <p>Monitoriza el progreso de cada uno de tus objetivos. Podrás consultar los días que te quedan para cumplir tu objetivo, cuántas tareas has completado o cuántas horas llevas dedicadas a cada tarea.</p>
+            </div>
+        </div>
+
+        <div class="function" onclick="location.href='/inbox'">
+            <div class="icon">
+                <button id="inboxButton" class="function-icon" onclick="location.href='/inbox'" aria-label="Ir a notificaciones"><i class="fas fa-inbox"></i></button>
+            </div>
+            <div class="text">
+                <h3>Notificaciones</h3>
+                <p>Recibe todas las alertas y notificaciones en tu bandeja de entrada para que estés al tanto en todo momento. Podrás eliminar una o todas las notificaciones si vacías la bandeja de entrada.</p>
+            </div>
+        </div>
+
+        <div class="function" onclick="location.href='/profile'">
+            <div class="icon">
+                <button id="profileButton" class="function-icon" aria-label="Ir a perfil"><i class="fas fa-user"></i></button>
+            </div>
+            <div class="text">
+                <h3>Perfil</h3>
+                <p>Visualiza y edita tus datos personales dentro de la apliación. Además, podrás cerrar sesión o eliminar tu cuenta de forma permanente.</p>
+            </div>
+        </div>
+
+
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+</html>

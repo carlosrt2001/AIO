@@ -22,7 +22,7 @@ document.getElementById('formRegister').addEventListener('submit', function(even
     var phone = document.getElementById('phone_number').value;
 
     if (user.length > 10) {
-        alert('El nombre de usuario no debe tener más de 10 caracteres');
+        alert('El nombre de usuario no debe tener más de 10 caracteres.');
         event.preventDefault();
         return;
     }
@@ -33,7 +33,7 @@ document.getElementById('formRegister').addEventListener('submit', function(even
     }
 
     if (password1 !== password2) {
-        alert('Las contraseñas no coinciden');
+        alert('Las contraseñas no coinciden.');
         event.preventDefault();
         return;
     }
@@ -51,11 +51,11 @@ function validatePhone(phone) {
     var phoneRegex = /^\d+$/;
 
     if (!phoneRegex.test(phone)) {
-        alert('El número de teléfono solo debe contener números');
+        alert('El número de teléfono solo debe contener números.');
         return false;
     }
     if (phone.length < 9 || phone.length > 15) {
-        alert('El número de teléfono debe tener entre 9 y 15 dígitos');
+        alert('El número de teléfono debe tener entre 9 y 15 dígitos.');
         return false;
     }
 
@@ -66,30 +66,34 @@ function validatePassword(password, username) {
     var minLength = 8;
     var hasUpperCase = /[A-Z]/.test(password);
     var hasLowerCase = /[a-z]/.test(password);
+    var hasNumber = /\d/.test(password);
     var hasSpecialChar = /[!@#$%^&*(),.?:{}|<>]/.test(password);
     var containsUsername = password.includes(username);
 
     if (password.length < minLength) {
-        alert('La contraseña debe tener al menos 8 caracteres');
+        alert('La contraseña debe tener al menos 8 caracteres.');
         return false;
     }
     if (!hasUpperCase) {
-        alert('La contraseña debe tener al menos una letra mayúscula');
+        alert('La contraseña debe contener al menos una letra mayúscula.');
         return false;
     }
     if (!hasLowerCase) {
-        alert('La contraseña debe tener al menos una letra minúscula');
+        alert('La contraseña debe contener al menos una letra minúscula.');
+        return false;
+    }
+    if (!hasNumber) {
+        alert('La contraseña debe contener al menos un número.');
         return false;
     }
     if (!hasSpecialChar) {
-        alert('La contraseña debe tener al menos un símbolo');
+        alert('La contraseña debe contener al menos un símbolo válido.');
         return false;
     }
     if (containsUsername) {
-        alert('La contraseña no puede contener el nombre de usuario');
+        alert('La contraseña no puede contener el nombre de usuario.');
         return false;
     }
-
     return true;
 }
 
@@ -105,5 +109,23 @@ function togglePassword(inputId, eyeId) {
         passwordInput.type = "password";
         eyeIcon.classList.remove("fa-eye-slash");
         eyeIcon.classList.add("fa-eye");
+    }
+}
+
+
+
+function openModal() {
+    var infoModal = document.getElementById('infoModal');
+    infoModal.style.display = "block";
+}
+
+window.onclick = function(event) {
+    var infoModal = document.getElementById('infoModal');
+    var closeModal = document.getElementById('closeModal');
+    if (event.target == infoModal) {
+        infoModal.style.display = "none";
+    }
+    if (event.target == closeModal) {
+        infoModal.style.display = "none";
     }
 }

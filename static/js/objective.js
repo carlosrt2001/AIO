@@ -5,14 +5,29 @@ $(function() {
 });
 
 function validateDates() {
-    var start_date = $("#start_date").datepicker("getDate");
-    var end_date = $("#end_date").datepicker("getDate");
+    var startDateInput = document.getElementById('edit_start_date');
+    var endDateInput = document.getElementById('edit_end_date');
 
-    if (start_date > end_date) {
-        alert("La fecha de inicio no puede ser mayor que la fecha de fin.");
+    var startDate = new Date(startDateInput.value);
+    var endDate = new Date(endDateInput.value);
+
+    // Validar que ambas fechas estén completas
+    if (!startDateInput.value || !endDateInput.value) {
+        alert('Por favor, complete ambas fechas.');
         return false;
     }
+
+    // Validar que la fecha de finalización no sea anterior a la de inicio
+    if (endDate < startDate) {
+        alert('La fecha de finalización debe ser mayor o igual a la fecha de inicio.');
+        return false;
+    }
+
     return true;
+}
+
+function updatePriorityValue(value) {
+        document.getElementById('priorityValue').textContent = value;
 }
 
 var buttonsTask = document.querySelectorAll('.btnTask');
@@ -60,5 +75,21 @@ window.onclick = function(event) {
 
     if (event.target == editObjectiveModal) {
         editObjectiveModal.style.display = "none";
+    }
+}
+
+function openModal() {
+    var infoModal = document.getElementById('infoModal');
+    infoModal.style.display = "block";
+}
+
+window.onclick = function(event) {
+    var infoModal = document.getElementById('infoModal');
+    var closeModal = document.getElementById('closeModal');
+    if (event.target == infoModal) {
+        infoModal.style.display = "none";
+    }
+    if (event.target == closeModal) {
+        infoModal.style.display = "none";
     }
 }

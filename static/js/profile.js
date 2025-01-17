@@ -60,11 +60,11 @@ function validatePhone(phone) {
     var phoneRegex = /^\d+$/;
 
     if (!phoneRegex.test(phone)) {
-        alert('El número de teléfono solo debe contener números');
+        alert('El número de teléfono solo debe contener números.');
         return false;
     }
     if (phone.length < 9 || phone.length > 15) {
-        alert('El número de teléfono debe tener entre 9 y 15 dígitos');
+        alert('El número de teléfono debe tener entre 9 y 15 dígitos.');
         return false;
     }
 
@@ -82,6 +82,22 @@ window.onclick = function(event) {
     }
     if (event.target == editProfileModal) {
         editProfileModal.style.display = "none";
+    }
+}
+
+function openModal() {
+    var infoModal = document.getElementById('infoModal');
+    infoModal.style.display = "block";
+}
+
+window.onclick = function(event) {
+    var infoModal = document.getElementById('infoModal');
+    var closeModal = document.getElementById('closeModal');
+    if (event.target == infoModal) {
+        infoModal.style.display = "none";
+    }
+    if (event.target == closeModal) {
+        infoModal.style.display = "none";
     }
 }
 

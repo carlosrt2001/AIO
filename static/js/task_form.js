@@ -29,6 +29,10 @@ function validateHours() {
     return true;
 }
 
+function updatePriorityValue(value) {
+        document.getElementById('priorityValue').textContent = value;
+}
+
 function addSchedule() {
     var newSchedule = document.querySelector('.schedule').cloneNode(true);
     document.getElementById('schedules').appendChild(newSchedule);
@@ -39,6 +43,22 @@ function removeSchedule() {
     if (schedules.children.length > 1) {
         schedules.removeChild(schedules.lastChild);
     } else {
-        alert("Debe haber al menos un día en el horario.");
+        alert("Debe haber al menos un día de realización.");
+    }
+}
+
+function openModal() {
+    var infoModal = document.getElementById('infoModal');
+    infoModal.style.display = "block";
+}
+
+window.onclick = function(event) {
+    var infoModal = document.getElementById('infoModal');
+    var closeModal = document.getElementById('closeModal');
+    if (event.target == infoModal) {
+        infoModal.style.display = "none";
+    }
+    if (event.target == closeModal) {
+        infoModal.style.display = "none";
     }
 }

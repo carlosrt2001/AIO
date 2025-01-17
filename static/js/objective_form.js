@@ -14,3 +14,39 @@ function previewImage() {
       reader.readAsDataURL(file);
     }
 }
+
+function updatePriorityValue(value) {
+        document.getElementById('priorityValue').textContent = value;
+}
+
+document.getElementById('formObjective').addEventListener('submit', function(event) {
+    var startDate = new Date(document.getElementById('start_date').value);
+    var endDate = new Date(document.getElementById('end_date').value);
+
+    if (!startDate || !endDate) {
+        alert('Por favor, complete ambas fechas.');
+        event.preventDefault();
+        return;
+    }
+
+    if (endDate < startDate) {
+        alert('La fecha de finalización debe ser mayor o igual a la fecha de inicio.');
+        event.preventDefault();
+    }
+});
+
+function openModal() {
+    var infoModal = document.getElementById('infoModal');
+    infoModal.style.display = "block";
+}
+
+window.onclick = function(event) {
+    var infoModal = document.getElementById('infoModal');
+    var closeModal = document.getElementById('closeModal');
+    if (event.target == infoModal) {
+        infoModal.style.display = "none";
+    }
+    if (event.target == closeModal) {
+        infoModal.style.display = "none";
+    }
+}

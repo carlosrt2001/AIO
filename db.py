@@ -36,8 +36,9 @@ class Objective(db.Model):
     color = db.Column(db.String(7), nullable=True)
     priority = db.Column(db.String(100), nullable=False)
     hours = db.Column(db.Integer, nullable=False)
-    start_date = db.Column(db.Date, nullable=True)
-    end_date = db.Column(db.Date, nullable=True)
+    start_date = db.Column(db.Date, nullable=False)
+    end_date = db.Column(db.Date, nullable=False)
+    completed = db.Column(db.Boolean, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     tasks = db.relationship('Task', backref='objective', lazy=True, cascade="all, delete")
 
@@ -46,11 +47,13 @@ class Task(db.Model):
     __tablename__ = 'tasks'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
+    priority = db.Column(db.String(100), nullable=False)
     min_hours = db.Column(db.Integer, nullable=False)
     max_hours = db.Column(db.Integer, nullable=False)
     location = db.Column(db.String(100), nullable=True)
     objective_id = db.Column(db.Integer, db.ForeignKey('objectives.id'), nullable=False)
     schedules = db.relationship('TaskSchedule', backref='task', cascade='all, delete-orphan')
+
 
 
 class TaskSchedule(db.Model):
@@ -104,3 +107,20 @@ class Notification(db.Model):
     description = db.Column(db.Text, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user = db.relationship('User', backref=db.backref('notifications', lazy=True, cascade="all, delete"))
+
+
+class AllocatedTask(db.Model):
+    __tablename__ = 'allocated_tasks'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    date = db.Column(db.Date, nullable=False)
+    start_time = db.Column(db.Time, nullable=False)
+    end_time = db.Column(db.Time, nullable=False)
+    dedicated_hours = db.Column(db.Integer, nullable=False)
+    completed = db.Column(db.Boolean, default=False)
+    task_id = db.Column(db.Integer, db.ForeignKey('tasks.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    task = db.relationship('Task', backref='allocated_tasks', lazy=True)
+
+
+

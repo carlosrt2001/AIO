@@ -11,18 +11,60 @@
 <body>
     {% include 'header.html' %}
 
+    <button class="info-button" onclick="openModal()" aria-label="Abrir panel de información">i</button>
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <h4>Ayuda</h4>
+            <p>Establece tus objetivos. A cada objetivo, añádele tareas para que se apliquen de manera automática e inteligente a tu agenda. Puedes crear un número ilimitado de objetivos.</p>
+            <h4>OBJETIVOS</h4>
+            <p>Los objetivos son las metas que tienes en tu vida. Crea un número indefinido de objetivos y a cada uno, añádele tareas para que se planifiquen en tu agenda.</p>
+            <p>Los objetivos se dividirán en 4 categorías:</p>
+            <strong>Objetivos Actuales</strong><br><span>Objetivos que aún no has completado y están actualmante en curso.</span><br><br>
+            <strong>Objetivos Completados</strong><br><span>Objetivos que han sido marcados como completados. No importa si están en curso o no. Las tareas de estos objetivos no se planificarán en la agenda.</span><br><br>
+            <strong>Objetivos Pasados</strong><br><span>Objetivos que no han sido marcados como completados y su fecha de finalización ya ha pasado. No se mostrarán en la planificación</span><br><br>
+            <strong>Objetivos Futuros</strong><br><span>Objetivos que no han sido marcados como completados y su fecha de inicio aún no ha llegado. Se empezarán a mostrar en la planificación una vez llegue su fecha de inicio.</span><br><br>
+            <p>Los campos obligatorios a rellenar para CREAR UN OBJETIVO serán:</p>
+            <strong>Nombre del objetivo</strong><br><span>Título o descripción del objetivo.</span><br><br>
+            <strong>Color del objetivo</strong><br><span>Por defecto, será de color verde. Edita el color a cada objetivo para diferenciarlo en la pantalla de objetivos y en la agenda.</span><br><br>
+            <strong>Prioridad</strong><br><span>Selecciona un valor de prioridad entre 0 y 100. Basado en los valores de prioridad de tus objetivos, el algoritmo asignará las tareas a tu agenda de la forma más óptima.</span><br><br>
+            <strong>Horas semanales</strong><br><span>El número de horas semanales que se estima o se desea dedicar al objetivo ayudará a determinar la distribución de las tareas de objetivo en la agenda.</span><br><br>
+            <strong>Fecha de inicio</strong><br><span>Establece la fecha en la que quieres empezar a realizar tareas para completar un objetivo.</span><br><br>
+            <strong>Fecha de finalización</strong><br><span>Indica la fecha límite que tienes para completar el objetivo propuesto.</span><br><br>
+            <p>El único campo que no es obligatrio es:</p>
+            <strong>Imagen del objetivo</strong><br><span>Asigna a un objetivo una imagen para tu página de objetivos esté lo más personalizada posible.</span><br><br>
+            <h4>TAREAS</h4>
+            <span>Una vez creado el objetivo, podrás añadir tareas para completar el objetivo.</span>
+            <span>Las tareas que componen un objetivo serán las que se muestren en la agenda.</span>
+            <strong>En caso de que tu objetivo sea directamente la tarea a realizar, crea la tarea dentro del objetivo para que se pueda plasmar en la agenda.</strong>
+            <p>Los campos obligatorios a rellenar para CREAR UNA TAREA serán:</p>
+            <strong>Nombre de la tarea</strong><br><span>Título o descripción de la tarea.</span><br><br>
+            <strong>Prioridad</strong><br><span>Selecciona un valor de prioridad entre 0 y 100. Basado en los valores de prioridad de las demás tareas de tu objetivo, el algoritmo asignará las tareas a tu agenda de la forma más óptima.</span><br><br>
+            <strong>Horas mínimas diarias</strong><br><span>Selecciona el número mínimo de horas que le podrás dedicar a una tarea en un día.</span><br><br>
+            <strong>Horas máximas diarias</strong><br><span>Selecciona el número máximo de horas que le podrás dedicar a una tarea en un día.</span><br><br>
+            <strong>Día de la semana y Horario</strong><br><span>Selecciona los días de la semana y el rango de horas del día en los que podrás realizar la tarea.</span><br><br>
+            <p>El único campo que no es obligatrio es:</p>
+            <strong>Ubicación</strong><br><span>Lugar en el que se desarrolla la tarea.</span><br>
+            <h4>EDITAR Y ELIMINAR</h4>
+            <span>Se podrán editar los parámetros y eliminar de forma permanente los objetivos y tareas creados.</span><br><br>
+            <span>Para marcar o desmarcar un objetivo como <strong>completado</strong>, esto se deberá hacer en el cuadro de edición del objetivo.</span><br><br>
+            <button id="closeModal" class="modal-button" type="button" aria-label="Cerrar panel de información">Cerrar</button>
+        </div>
+    </div>
+
     <h2>{{ objective.name }}</h2>
     <div class="objective">
         <div class="image-info">
             {% if objective.image %}
-                <img class="objective_image" src="{{ url_for('static', filename='images/objectives/' + objective.image) }}">
+                <img class="objective_image" src="{{ url_for('static', filename='images/objectives/' + objective.image) }}"
+                     alt="Imagen asociada al objetivo '{{ objective.name }}'">
             {% else %}
-                <img class="objective_image" src="{{ url_for('static', filename='images/objective.png') }}">
+                <img class="objective_image" src="{{ url_for('static', filename='images/objective.png') }}"
+                     alt="Imagen genérica de objetivo">
             {% endif %}
             <div class="objective_info">
                 <strong>Prioridad: </strong><span>{{ objective.priority }}</span><br><br>
                 <strong>Horas semanales: </strong><span>{{ objective.hours }}</span><br><br>
-                <strong>Período: </strong>
+                <strong>Periodo: </strong>
                 {% if objective.start_date %}
                     {% if objective.end_date %}
                         <span>{{ objective.start_date.strftime('%d/%m/%Y') }} - {{ objective.end_date.strftime('%d/%m/%Y') }}</span>
@@ -38,19 +80,22 @@
                 {% endif %}
             </div>
         </div>
+
         <div class="objective_btns">
-            <button id="editObjective"><i class="fas fa-pencil-alt"></i>Editar Objetivo</button>
-            <button id="deleteObjective" data-objective-id="{{ objective.id }}"><i class="fas fa-trash-alt"></i>Eliminar Objetivo</button>
+            <button id="editObjective"><i class="fas fa-pencil-alt" aria-label="Editar el objetivo"></i>Editar Objetivo</button>
+            <button id="deleteObjective" data-objective-id="{{ objective.id }}" aria-label="Eliminar el objetivo"><i class="fas fa-trash-alt"></i>Eliminar Objetivo</button>
         </div>
     </div>
 
     <h3>Lista de Tareas</h3>
-    <button id="btnAddTask" data-objective-id="{{ objective.id }}"><i class="fas fa-plus"></i>Añadir Tarea</button>
+    <button id="btnAddTask" data-objective-id="{{ objective.id }}">
+        <i class="fas fa-plus" aria-label="Añadir una nueva tarea al objetivo"></i>Añadir Tarea
+    </button>
 
-    {% if objective.tasks %}
+    {% if tasks %}
         <ul>
-            {% for task in objective.tasks %}
-                <button class="btnTask" data-id="{{ task.id }}" style="background-color: {{ objective.color }};">
+            {% for task in tasks %}
+                <button class="btnTask" data-id="{{ task.id }}" style="background-color: {{ objective.color }};" aria-label="Abrir la tarea '{{ task.name }}'">
                     <li>
                         <div class="text-container">
                             <p id="task_name">{{ task.name }}</p>
@@ -60,14 +105,15 @@
             {% endfor %}
         </ul>
     {% else %}
-            <p id="no_tasks">Añade tareas para completar tu objetivo</p>
+        <p id="no_tasks">Añade tareas para completar tu objetivo</p>
     {% endif %}
+
 
     <div id="deleteObjectiveModal" class="modal">
         <div class="modal-content">
             <p>¿Seguro que deseas eliminar este objetivo?</p>
-            <button id="confirmDelete" class="modal-button">Eliminar</button>
-            <button id="cancelDelete" class="modal-button">Cancelar</button>
+            <button id="confirmDelete" class="modal-button" aria-label="Confirmar eliminación del objetivo">Eliminar</button>
+            <button id="cancelDelete" class="modal-button" aria-label="Cancelar eliminación del objetivo">Cancelar</button>
         </div>
     </div>
 
@@ -75,26 +121,27 @@
         <div class="modal-content">
             <h2>Editar Objetivo</h2>
             <form id="editObjectiveForm" method="post" action="/edit_objective/{{ objective.id }}" onsubmit="return validateDates()">
-                <label for="name">Nombre del Objetivo:</label>
-                <input type="text" id="name" name="name" value="{{ objective.name }}" required><br><br>
+                <label for="edit_name">Nombre del Objetivo:</label>
+                <input type="text" id="edit_name" name="name" value="{{ objective.name }}" required><br><br>
 
-                <label for="priority">Prioridad:</label>
-                <select id="priority" name="priority" value="{{ objective.priority }}">
-                    <option value="Alta">Alta</option>
-                    <option value="Media" selected>Media</option>
-                    <option value="Baja">Baja</option>
-                </select><br><br>
+                <label for="edit_priority">Prioridad:</label>
+                <input type="range" id="edit_priority" name="priority" min="0" max="100"
+                       value="{{ objective.priority | default(50) }}" oninput="updatePriorityValue(this.value)">
+                <span id="priorityValue">{{ objective.priority | default(50) }}</span><br><br>
 
-                <label for="hours">Horas Semanales:</label>
-                <input type="number" id="hours" name="hours" value="{{ objective.hours }}" min="1" value="1" required><br><br>
+                <label for="edit_hours">Horas Semanales:</label>
+                <input type="number" id="edit_hours" name="hours" value="{{ objective.hours }}" min="1" required><br><br>
 
-                <label for="start_date">Fecha de Inicio:</label>
-                <input type="date" id="start_date" name="start_date" value="{{ objective.start_date }}"><br><br>
+                <label for="edit_start_date">Fecha de Inicio:</label>
+                <input type="date" id="edit_start_date" name="start_date" value="{{ objective.start_date }}" required><br><br>
 
-                <label for="end_date">Fecha de Finalización:</label>
-                <input type="date" id="end_date" name="end_date" value="{{ objective.end_date }}"><br><br>
+                <label for="edit_end_date">Fecha de Finalización:</label>
+                <input type="date" id="edit_end_date" name="end_date" value="{{ objective.end_date }}" required><br><br>
 
-                <button id="saveEdit" class="modal-button">Guardar</button>
+                <label for="edit_completed">Objetivo completado:</label>
+                <input type="checkbox" id="edit_completed" name="completed" {% if objective.completed %}checked{% endif %}><br><br>
+
+                <button id="saveEdit" class="modal-button" aria-label="Guardar datos editados del objetivo">Guardar</button>
             </form>
         </div>
     </div>

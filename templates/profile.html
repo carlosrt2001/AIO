@@ -9,13 +9,22 @@
 <body>
     {% include 'header.html' %}
 
+    <button class="info-button" onclick="openModal()" aria-label="Abrir panel de información">i</button>
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <h4>Ayuda</h4>
+            <p>Visualiza y edita tus datos personales dentro de la apliación. Además, podrás cerrar sesión o eliminar tu cuenta de forma permanente.</p>
+            <button id="closeModal" class="modal-button" type="button" aria-label="Cerrar panel de información">Cerrar</button>
+        </div>
+    </div>
+
     <h2>Mi Perfil</h2>
     <div class="form">
         <div class="image-container">
             {% if user.image %}
-                <img class="user_image" src="{{ url_for('static', filename='images/profile/' + user.image) }}">
+                <img class="user_image" src="{{ url_for('static', filename='images/profile/' + user.image) }}" alt="Imagen de perfil del usuario">
             {% else %}
-                <img class="user_image" src="{{ url_for('static', filename='images/profile.png') }}">
+                <img class="user_image" src="{{ url_for('static', filename='images/profile.png') }}" alt="Imagen genérica de perfil de usuario">
             {% endif %}
         </div>
         <p><strong>Nombre de usuario:</strong> {{ user.username }}</p>
@@ -40,9 +49,9 @@
         {% endif %}
 
         <div class="buttons">
-            <button id="editProfile"><i class="fas fa-pencil-alt"></i>Editar Perfil</button>
-            <button id="logout"><i class="fas fa-sign-out-alt"></i>Cerrar Sesión</button>
-            <button id="deleteProfile"><i class="fas fa-trash-alt"></i>Eliminar Cuenta</button>
+            <button id="editProfile"><i class="fas fa-pencil-alt" aria-label="Editar perfil"></i>Editar Perfil</button>
+            <button id="logout"><i class="fas fa-sign-out-alt" aria-label="Cerrar sesión"></i>Cerrar Sesión</button>
+            <button id="deleteProfile"><i class="fas fa-trash-alt" aria-label="Eliminar cuenta"></i>Eliminar Cuenta</button>
         </div>
     </div>
 
@@ -58,17 +67,14 @@
 
                 <label for="phone_country_code">Teléfono:</label>
                 <select id="phone_country_code" name="phone_country_code" required>
-                    <option value="+1" {% if user.phone_country_code == "+1" %}selected{% endif %}>+1 (EE.UU.)</option>
                     <option value="+34" {% if user.phone_country_code == "+34" %}selected{% endif %}>+34 (España)</option>
-                    <option value="+52" {% if user.phone_country_code == "+52" %}selected{% endif %}>+52 (México)</option>
-                    <option value="+44" {% if user.phone_country_code == "+44" %}selected{% endif %}>+44 (Reino Unido)</option>
                 </select>
 
                 <input type="tel" id="phone_number" name="phone_number" {% if user.phone_number %}value="{{ user.phone_number }}"{% endif %}><br><br>
 
 
-                <button type="submit" class="modal-button">Guardar</button>
-                <button type="button" id="cancelEditProfile" class="modal-button">Cancelar</button>
+                <button type="submit" class="modal-button" aria-label="Guardar cambios al perfil">Guardar</button>
+                <button type="button" id="cancelEditProfile" class="modal-button" aria-label="Cancelar cambios al perfil">Cancelar</button>
             </form>
         </div>
     </div>
@@ -77,15 +83,15 @@
     <div id="logoutModal" class="modal">
         <div class="modal-content">
             <p>¿Seguro que deseas cerrar la sesión?</p>
-            <button id="confirmLogout" class="modal-button">Aceptar</button>
-            <button id="cancelLogout" class="modal-button">Cancelar</button>
+            <button id="confirmLogout" class="modal-button" aria-label="Confirmar cerrar sesión">Aceptar</button>
+            <button id="cancelLogout" class="modal-button" aria-label="Cancelar cerrar sesión">Cancelar</button>
         </div>
     </div>
     <div id="deleteAccountModal" class="modal">
         <div class="modal-content">
             <p>¿Seguro que deseas eliminar tu cuenta? Esta acción no se puede deshacer.</p>
-            <button id="confirmDelete" class="modal-button">Eliminar</button>
-            <button id="cancelDelete" class="modal-button">Cancelar</button>
+            <button id="confirmDelete" class="modal-button" aria-label="Confirmar la eliminación de la cuenta">Eliminar</button>
+            <button id="cancelDelete" class="modal-button" aria-label="Cancelar la eliminación de la cuenta">Cancelar</button>
         </div>
     </div>
 

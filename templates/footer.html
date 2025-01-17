@@ -9,31 +9,56 @@
 <body>
     <footer>
         <div class="column">
-            <h3 class="title">Accede a nuestras funcionalidades</h3>
+            <h5 class="title">Páginas</h5>
             <ul class="list">
-                <li><button class="item {% if active_page == 'main' %}active{% endif %}" onclick="location.href='/main'"><i class="fas fa-home"></i>Página Principal</button></li>
-                <li><button class="item {% if active_page == 'objectives' %}active{% endif %}" onclick="location.href='/objectives'"><i class="fas fa-bullseye"></i>Objetivos</button></li>
-                <li><button class="item {% if active_page == 'agenda' %}active{% endif %}" onclick="location.href='/agenda'"><i class="far fa-calendar-alt"></i>Agenda</button></li>
-                <li><button class="item {% if active_page == 'progress' %}active{% endif %}" onclick="location.href='/progress'"><i class="fas fa-chart-line"></i>Progreso</button></li>
-                <li><button class="item {% if active_page == 'inbox' %}active{% endif %}" onclick="location.href='/inbox'"><i class="fas fa-inbox"></i>Notificaciones</button></li>
-                <li><button class="item {% if active_page == 'profile' %}active{% endif %}" onclick="location.href='/profile'"><i class="fas fa-user"></i>Perfil</button></li>
+                <li><button class="item {% if active_page == 'objectives' %}active{% endif %}"
+                            onclick="location.href='/objectives'" aria-label="Ir a objetivos">
+                            <i class="fas fa-bullseye"></i>Objetivos</button></li>
+                <li><button class="item {% if active_page == 'agenda' %}active{% endif %}"
+                            onclick="location.href='/agenda/0'" aria-label="Ir a agenda">
+                            <i class="far fa-calendar-alt"></i>Agenda</button></li>
+                <li><button class="item {% if active_page == 'progress' %}active{% endif %}"
+                            onclick="location.href='/progress'" aria-label="Ir a progreso">
+                            <i class="fas fa-chart-line"></i>Progreso</button></li>
+                <li><button class="item {% if active_page == 'inbox' %}active{% endif %}"
+                            onclick="location.href='/inbox'" aria-label="Ir a notificaciones">
+                            <i class="fas fa-inbox"></i>Notificaciones</button></li>
+                <li><button class="item {% if active_page == 'profile' %}active{% endif %}"
+                            onclick="location.href='/profile'" aria-label="Ir a perfil">
+                            <i class="fas fa-user"></i>Perfil</button></li>
             </ul>
         </div>
         <div class="column">
-            <h3 class="title">Contáctanos</h3>
+            <h5 class="title">Contáctanos</h5>
             <ul class="list">
-                <li class="contact"><i class="far fa-envelope"></i>aio@gmail.com</li>
+                <li class="contact"><i class="far fa-envelope"></i>infoagenda.aio@gmail.com</li>
                 <li class="contact"><i class="fas fa-phone"></i>+34 666 666 666</li>
             </ul>
         </div>
         <div class="column">
-            <h3 class="title">Síguenos en redes sociales</h3>
+            <h5 class="title">Información</h5>
             <ul class="list">
-                <li><button class="social-media" id="btnFacebook"><i class="fab fa-facebook" onclick="location.href='https://www.facebook.com/'"></i>Facebook</button></li>
-                <li><button class="social-media" id="btnInstagram"><i class="fab fa-instagram" onclick="location.href='https://www.instagram.com/'"></i>Instagram</button></li>
-                <li><button class="social-media" id="btnX"><i class="fab fa-twitter" onclick="location.href='https://twitter.com/?lang=es'"></i>X</button></li>
-                <li><button class="social-media" id="btnTikTok"><i class="fab fa-tiktok" onclick="location.href='https://www.tiktok.com/es/'"></i>TikTok</button></li>
-                <li><button class="social-media" id="btnYoutube"><i class="fab fa-youtube" onclick="location.href='https://www.youtube.com/'"></i>YouTube</button></li>
+                <li><button class="item {% if active_page == 'help' %}active{% endif %}"
+                            onclick="location.href='/help'" aria-label="Ir a ayuda">Ayuda</button></li>
+                <li><button class="item {% if active_page == 'legal' %}active{% endif %}"
+                            onclick="location.href='/legal'" aria-label="Ir a Aviso Legal">Aviso Legal</button></li>
+                <li><button class="item {% if active_page == 'privacy_policy' %}active{% endif %}"
+                            onclick="location.href='/privacy_policy'" aria-label="Ir a Política de Privacidad">Política de Privacidad</button></li>
+            </ul>
+        </div>
+        <div class="column">
+            <h5 class="title">Redes sociales</h5>
+            <ul class="list">
+                <li><button class="social-media" id="btnFacebook"><i class="fab fa-facebook"
+                                                                        onclick="location.href='https://www.facebook.com/'" aria-label="Ir a Facebook"></i>Facebook</button></li>
+                <li><button class="social-media" id="btnInstagram"><i class="fab fa-instagram"
+                                                                        onclick="location.href='https://www.instagram.com/'" aria-label="Ir a Instagram"></i>Instagram</button></li>
+                <li><button class="social-media" id="btnX"><i class="fab fa-twitter"
+                                                                        onclick="location.href='https://twitter.com/?lang=es'" aria-label="Ir a X"></i>X</button></li>
+                <li><button class="social-media" id="btnTikTok"><i class="fab fa-tiktok"
+                                                                        onclick="location.href='https://www.tiktok.com/es/'" aria-label="Ir a TikTok"></i>TikTok</button></li>
+                <li><button class="social-media" id="btnYoutube"><i class="fab fa-youtube"
+                                                                        onclick="location.href='https://www.youtube.com/'" aria-label="Ir a YouTube"></i>YouTube</button></li>
             </ul>
         </div>
     </footer>

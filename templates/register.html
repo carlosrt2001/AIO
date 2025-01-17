@@ -12,17 +12,43 @@
     <a href="/" class="back-button">
         <i class="fas fa-arrow-left"></i>
     </a>
+
+    <button class="info-button" onclick="openModal()" aria-label="Abrir panel de información">i</button>
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <h4>Ayuda</h4>
+            <p>Regístrate de forma totalmente gratuita en la aplicación web. Para ello tan solo tendrás que rellenar los siguientes campos obligatorios del formulario:</p>
+            <strong>Nombre de usuario</strong><span>Nombre único con el que se te identificará en la aplicación.</span><br><br>
+            <strong>Contraseña</strong><span>Contraseña para acceder a tu cuenta.</span><br><br>
+            <strong>Confirmar Contraseña</strong><span>Vuelve a introducir la contraseña con el fin de asegurar que no hay ningún error.</span><br><br>
+            <strong>La contraseña debe cumplir las siguientes condiciones:</strong>
+            <span>La contraseña debe contener mínimo 8 caracteres.</span><br>
+            <span>La contraseña debe contener al menos una letra mayúscula.</span><br>
+            <span>La contraseña debe contener al menos una letra minúscula.</span><br>
+            <span>La contraseña debe contener al menos un número.</span><br>
+            <span>La contraseña debe contener al menos un símbolo: !@#$%^&*(),.?:{}|<></span><br>
+            <span>La contraseña no puede contener el nombre de usuario.</span><br><br>
+            <span>Además, puedes añadir los siguientes campos opcionales:</span><br><br>
+            <strong>Foto de perfil</strong><span>Imagen para personalizar tu perfil.</span><br><br>
+            <strong>Correo electrónico</strong><span>Dirección de correo electrónico para recuperar la contraseña o exportar tu agenda.</span><br><br>
+            <strong>Teléfono</strong><span>Número de teléfono para exportar tu agenda a través de Whatsapp.</span><br><br>
+            <strong>El correo electrónico y el teléfono los podrás añadir editando el perfil más adelante. También podrás actualizar tu nombre de usuario.</strong><br>
+            <span>Se deberá marcar la casilla de verificación aceptando la Política de Privacidad.</span><br><br>
+            <button id="closeModal" class="modal-button" type="button" aria-label="Cerrar panel de información">Cerrar</button>
+        </div>
+    </div>
+
     <div class="wrapper">
         <form id="formRegister" method="post" enctype="multipart/form-data" action="/register">
             <h2>Regístrate</h2>
 
             <p for="profile_image">Foto de perfil:</p>
             <div class="image-container">
-                <img id="profile_image" style="display: none;"><br>
+                <img id="profile_image" style="display: none;" alt="Vista previa de la imagen de perfil"><br>
                 <input type="file" name="imageInput" id="imageInput" accept="image/*"><br><br><br>
             </div>
 
-            <label for="user">Nombre de usuario: *</label>
+            <strong for="user">Nombre de usuario:</strong>
             <input type="text" id="user" name="user" required><br><br>
 
             <label for="email">Correo electrónico:</label>
@@ -31,33 +57,44 @@
             <label for="phone_number">Teléfono:</label>
             <div class="phone-container">
                 <select id="country_code" name="country_code" required>
-                    <option value="+1">+1 (EE.UU.)</option>
                     <option value="+34">+34 (España)</option>
-                    <option value="+52">+52 (México)</option>
-                    <option value="+44">+44 (Reino Unido)</option>
                 </select>
                 <input type="tel" id="phone_number" name="phone_number"><br><br>
             </div>
 
-            <label for="password1">Contraseña: *</label>
+            <strong for="password1">Contraseña:</strong>
             <div class="password-container">
                 <input type="password" id="password1" name="password1" required><br><br>
                 <i id="eye1" class="fas fa-eye toggle-password" onclick="togglePassword('password1', 'eye1')"></i>
             </div><br><br>
 
 
-            <label for="password2">Confirmar contraseña: *</label>
+            <strong for="password2">Confirmar contraseña:</strong>
             <div class="password-container">
                 <input type="password" id="password2" name="password2" required><br><br>
                 <i id="eye2" class="fas fa-eye toggle-password" onclick="togglePassword('password2', 'eye2')"></i>
             </div><br><br>
 
+            <div class="privacy-policy">
+            <input type="checkbox" id="privacy_policy" name="privacy_policy" required>
+            <label for="privacy_policy">
+                Acepto la <a href="/privacy_policy" target="_blank">Política de Privacidad</a>.
+            </label>
+            </div><br><br>
+
+            <div class="legal">
+            <input type="checkbox" id="legal" name="legal" required>
+            <label for="legal">
+                Acepto el <a href="/legal" target="_blank">Aviso Legal</a>.
+            </label>
+            </div><br><br>
+
             <p id="message">{{ message }}</p><br><br>
 
-            <button type="submit">Regístrate</button>
+            <button class="btn-register" type="submit" aria-label="Registrarse">Regístrate</button>
 
             <p>¿Ya tienes una cuenta?</p>
-            <button class="btn-gotoLogIn" onclick="window.location.href='/login'">Inicia Sesión</button>
+            <button class="btn-gotoLogIn" onclick="window.location.href='/login'" aria-label="Ir a iniciar sesión">Inicia Sesión</button>
         </form>
     </div>
 

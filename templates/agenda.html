@@ -1,55 +1,94 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/agenda.css') }}">
     <title>Agenda</title>
   </head>
   <body>
+
+    <button class="info-button" onclick="openModal()" aria-label="Abrir panel de información">i</button>
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <h4>Ayuda</h4>
+            <p>Consulta tu agenda. Podrás ver la asignación automática de las tareas para cumplir tus objetvios. También podrás añadir a cada día las actividades puntuales o tus rutinas.</p>
+            <h4>ACTIVIDAD</h4>
+            <strong>Una ACTIVIDAD será aquel evento que se realizará una única vez.</strong><br>
+            <span>Por ejemplo, 'Recoger el coche del taller'.</span><br><br>
+            <span>Los campos obligatorios para AÑADIR ACTIVIDAD son:</span><br><br>
+            <strong>Nombre de la actividad</strong><br><span>Título de la actividad.</span><br><br>
+            <strong>Fecha</strong><br><span>Día en el que se va a realizar la actividad.</span><br><br>
+            <strong>Hora de inicio</strong><br><span>Hora en la que comienza la actividad.</span><br><br>
+            <strong>Hora de finalización</strong><br><span>Hora de conclusión de la actividad.</span><br><br>
+            <strong>Color</strong><br><span>Color con el que se representará la actividad en la agenda. Por defecto, será de color naranja.</span><br><br>
+            <span>El campo opcional que no es obligatorio completar:</span><br><br>
+            <strong>Descripción</strong><br><span>Descripición o información adicional de la actividad.</span><br><br>
+            <h4>RUTINA</h4>
+            <strong>Una RUTINA será aquel evento que se repetirá periódicamente ciertos días de la semana en una franja horaria.</strong><br>
+            <span>Por ejemplo, 'Ir a trabajar'.</span><br><br>
+            <span>Los campos obligatorios para AÑADIR RUTINA son:</span><br><br>
+            <strong>Nombre de la rutina</strong><br><span>Título de la rutina.</span><br><br>
+            <strong>Día de la semana y Horario</strong><br><span>Días en los que se va a realizar el evento y su franja horaria. Se podrán añadir y quitar todos los días necesarios.</span><br><br>
+            <strong>Color</strong><br><span>Color con el que se representará la rutina en la agenda. Por defecto, será de color azul marino.</span><br><br>
+            <span>El campo opcional que no es obligatorio completar:</span><br><br>
+            <strong>Descripción</strong><br><span>Descripición o información adicional de la rutina.</span><br><br>
+            <h4>PLANIFICAR</h4>
+            <span>El botón para planificar hará la asignación de tareas en los días restantes de la semana (hasta el domingo) y la semana siguiente. En caso de ya existir una asignación de tareas, éstas se sobreescibirán.</span><br>
+            <h4>ELIMINAR EVENTOS</h4>
+            <span>Una vez añadidos a la agenda una actividad o una rutina, éstas no se podrán editar pero sí eliminar.</span><br>
+            <span>Para eliminar una actividad o rutina, se deberá hacer clic en el icono del contenedor del evento en la agenda.</span><br>
+            <strong>No se podrá eliminar un único evento de una rutina sino la rutina completa.</strong><br>
+            <h4>COLOR DE LA AGENDA</h4>
+            <span>Se podrá actualizar el color de la agenda en cualquier momento. Por defecto, será de color verde.</span><br><br>
+            <button id="closeModal" class="modal-button" type="button" aria-label="Cerrar panel de información">Cerrar</button>
+        </div>
+    </div>
+
     <div class="wrapper">
       {% include 'header.html' %}
       <h2>Mi Agenda</h2><br>
 
       <div class="buttons">
-        <button id="activity" class="btnAdd"><i class="fas fa-plus-circle"></i>Añadir Actividad</button>
-        <button id="routine" class="btnAdd"><i class="far fa-calendar-plus"></i>Añadir Rutina</button>
+        <button id="activity" class="btnAdd">
+            <i class="fas fa-plus-circle"
+               aria-label="Abrir panel con el formulario para añadir una actividad "></i>Añadir Actividad</button>
+        <button id="routine" class="btnAdd">
+            <i class="far fa-calendar-plus"
+               aria-label="Abrir panel con el formulario para añadir una rutina"></i>Añadir Rutina</button>
       </div>
 
-      <div class="container">
-        <div class="left">
-          <div class="calendar">
-            <div class="month">
-              <i class="fas fa-angle-left prev"></i>
-              <div class="date"></div>
-              <i class="fas fa-angle-right next"></i>
-            </div>
-            <div class="weekdays">
-              <div>Lun</div>
-              <div>Mar</div>
-              <div>Mié</div>
-              <div>Jue</div>
-              <div>Vie</div>
-              <div>Sáb</div>
-              <div>Dom</div>
-            </div>
-            <div class="days"></div>
-            <div class="goto-today">
-              <div class="goto">
-                <input type="text" placeholder="mm/aaaa" class="date-input" />
-                <button class="goto-btn">Ir</button>
-              </div>
-              <button class="today-btn">Hoy</button>
-            </div>
-          </div>
+        <div class="buttons">
+            <button id="plan" class="btnPlan" onclick="location.href='/plan'" aria-label="Generar planificación semanal de las tareas"><i class="fas fa-sync"></i>Planificar</button>
         </div>
-        <div class="right">
-          <div class="today-date">
-            <div class="event-day"></div>
-            <div class="event-date"></div>
-          </div>
-          <div class="events"></div>
-          </div>
+
+        <div class="navigation">
+            <a href="{{ url_for('agenda', offset=offset-1) }}" class="btnWeek">
+                <i class="fas fa-arrow-left" aria-label="Cargar agenda de la semana anterior"></i> Semana Anterior</a>
+            <a href="{{ url_for('agenda', offset=offset+1) }}" class="btnWeek"
+               aria-label="Cargar agenda de la semana siguiente">Semana Siguiente <i class="fas fa-arrow-right"></i></a>
         </div>
-      </div>
+
+        <p id="week">{{ start_date }} - {{ end_date }}</p>
+
+    <div>
+        {% for day, events in week_data.items() %}
+        <div class="day-container" style="background-color: {{ agenda_color }}">
+            <h3>{{ day.value }}</h3>
+            {% for event in events %}
+            <div class="event-container" style="border-left: 8px solid {{ event.color }}">
+            <strong id="event_name">{{ event.name }}</strong><br>
+            {{ event.start_time }} - {{ event.end_time }}<br>
+            {% if event.type == 'activity' or event.type == 'routine'%}
+            <p>{{ event.description }}</p>
+            {% elif event.type == 'task' %}
+            <br><label for="task-{{ event.id }}">Completado:</label>
+            <input type="checkbox" id="task-{{ event.id }}" class="task-checkbox" data-task-id="{{ event.id }}" {% if event.completed %}checked{% endif %}><br><br>
+            {% endif %}
+            <i class="fas fa-trash delete-icon" onclick="openDeleteModal({{ event.id }}, '{{ event.type }}')" aria-label="Eliminar evento de la agenda"></i>
+        </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
     </div>
 
     <div id="activityModal" class="modal">
@@ -57,19 +96,19 @@
         <h2>Añadir Actividad</h2>
         <form id="form-activity" action="/activity_form" method="POST">
           <div class="input">
-            <label for="activity-name">Nombre de la actividad:</label>
+            <strong for="activity-name">Nombre de la actividad:</strong>
             <input type="text" id="activity-name" name="activity-name" required>
           </div>
           <div class="input">
-            <label for="activity-date">Fecha:</label>
+            <strong for="activity-date">Fecha:</strong>
             <input type="date" id="activity-date" name="activity-date" required>
           </div>
           <div class="input">
-            <label for="activity-startTime">Hora de inicio:</label>
+            <strong for="activity-startTime">Hora de inicio:</strong>
             <input type="time" id="activity-startTime" name="activity-startTime" required>
           </div>
           <div class="input">
-            <label for="activity-endTime">Hora de finalización:</label>
+            <strong for="activity-endTime">Hora de finalización:</strong>
             <input type="time" id="activity-endTime" name="activity-endTime" required>
           </div>
           <div class="input">
@@ -77,13 +116,13 @@
             <textarea id="activity-description" name="activity-description"></textarea>
           </div>
           <div class="input">
-            <label for="activity-color">Color:</label>
+            <strong for="activity-color">Color:</strong>
             <input type="color" id="activity-color" name="activity-color" value="#ff9642"><br><br>
           </div>
 
           <div class="buttons-modal">
-              <button id="confirmActivity" class="modal-button" type="submit">Añadir</button>
-              <button id="cancelActivity" class="modal-button" type="button">Cancelar</button>
+              <button id="confirmActivity" class="modal-button" type="submit" aria-label="Añadir actividad a la agenda">Añadir</button>
+              <button id="cancelActivity" class="modal-button" type="button" aria-label="Cerrar formulario para añadir actividad">Cancelar</button>
           </div>
         </form>
       </div>
@@ -95,7 +134,7 @@
         <h2>Añadir Rutina</h2>
         <form id="form-rutina" action="/routine_form" method="POST">
           <div class="input">
-            <label for="routine-name">Nombre de la rutina:</label>
+            <strong for="routine-name">Nombre de la rutina:</strong>
             <input type="text" id="routine-name" name="routine-name" required>
           </div>
 
@@ -121,8 +160,8 @@
           </div>
 
           <div class="modifyDays">
-            <button id="addDay" type="button" onclick="addSchedule()">Añadir Día</button>
-            <button id="removeDay" type="button" onclick="removeSchedule()">Quitar Día</button><br><br>
+            <button id="addDay" type="button" onclick="addSchedule()" aria-label="Añadir día y horario de la rutina">Añadir Día</button>
+            <button id="removeDay" type="button" onclick="removeSchedule()" aria-label="Quitar último día añadido de la rutina">Quitar Día</button><br><br>
           </div>
 
           <div class="input">
@@ -131,13 +170,13 @@
           </div>
 
           <div class="input">
-            <label for="routine-color">Color:</label>
-            <input type="color" id="routine-color" name="routine-color" value="#b7edff"><br><br>
+            <strong for="routine-color">Color:</strong>
+            <input type="color" id="routine-color" name="routine-color" value="#003366"><br><br>
           </div>
 
           <div class="buttons-modal">
-              <button id="confirmRoutine" class="modal-button" type="submit">Añadir</button>
-              <button id="cancelRoutine" class="modal-button" type="button">Cancelar</button>
+              <button id="confirmRoutine" class="modal-button" type="submit" aria-label="Añadir rutina a la agenda">Añadir</button>
+              <button id="cancelRoutine" class="modal-button" type="button" aria-label="Cerrar formulario para añadir rutina">Cancelar</button>
           </div>
         </form>
       </div>
@@ -145,16 +184,23 @@
 
     <div id="deleteActivityModal" class="modal">
         <div class="modal-content">
-            <p>¿Seguro que deseas eliminar esta actividad o rutina?</p>
-            <button id="confirmDelete" class="modal-button">Eliminar</button>
-            <button id="cancelDelete" class="modal-button">Cancelar</button>
+            <p>¿Seguro que deseas eliminar este evento?</p>
+            <button id="confirmDelete" class="modal-button" aria-label="Confirmar eliminación">Eliminar</button>
+            <button id="cancelDelete" class="modal-button" aria-label="Cancelar eliminación">Cancelar</button>
         </div>
     </div>
 
+    <div class="export">
+        <span for="export">Exportar:</span>
+        <button class="btnExport" id="mail"><i class="fas fa-envelope" aria-label="Exportar planificación al email"></i></button>
+        <button class="btnExport" id="whatsapp"><i class="fab fa-whatsapp" aria-label="Exportar planificación al whatsapp"></i></button>
+        <button class="btnExport" id="download"><i class="fas fa-download" aria-label="Descargar planificación en el dispositivo"></i></button>
+    </div>
+
     <div id="agenda-colorPick">
-      <strong for="color">Color de la agenda:</strong>
+      <span for="color">Color de la agenda:</span>
       <input type="color" id="color" name="color" value="{{ agenda_color }}"><br><br>
-      <button onclick="updateAgendaColor(document.getElementById('color').value)">Aplicar</button>
+      <button onclick="updateAgendaColor(document.getElementById('color').value)" aria-label="Aplicar color seleccionado al fondo de la agenda">Aplicar</button>
     </div>
 
 
