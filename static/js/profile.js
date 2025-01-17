@@ -1,3 +1,4 @@
+// Opens the modal windows to edit the profile, logout and delete the account
 var logoutModal = document.getElementById('logoutModal');
 var deleteAccountModal = document.getElementById('deleteAccountModal');
 var editProfileModal = document.getElementById('editProfileModal');
@@ -43,6 +44,7 @@ btnCancelEditProfile.onclick = function() {
 }
 
 
+// Validates that the value introduced as phone number follows the established rules
 document.getElementById('editProfileForm').addEventListener('submit', function(event) {
     var phone = document.getElementById('phone_number').value;
 
@@ -72,7 +74,7 @@ function validatePhone(phone) {
 }
 
 
-
+// Closes the modal windows if the user clics outside them
 window.onclick = function(event) {
     if (event.target == logoutModal) {
         logoutModal.style.display = "none";
@@ -85,6 +87,8 @@ window.onclick = function(event) {
     }
 }
 
+
+// Open modal window with help information for the profile page
 function openModal() {
     var infoModal = document.getElementById('infoModal');
     infoModal.style.display = "block";

@@ -1,3 +1,4 @@
+// Update agenda color
 function updateAgendaColor(newColor) {
   fetch('/update_agenda_color', {
     method: 'POST',
@@ -19,8 +20,7 @@ function updateAgendaColor(newColor) {
 }
 
 
-
-// Gestión de modales de actividades y rutinas
+// Add activity and routine modal windows
 var activityModal = document.getElementById('activityModal');
 var routineModal = document.getElementById('routineModal');
 var btnOpenActivity = document.getElementById("activity");
@@ -31,6 +31,7 @@ var btnConfirmRoutine = document.getElementById("confirmRoutine");
 var btnCancelRoutine = document.getElementById("cancelRoutine");
 
 
+// Validate the data introduced in the activity form
 function validateActivityForm() {
   var activityName = document.getElementById('activity-name').value;
   var activityDate = document.getElementById('activity-date').value;
@@ -44,6 +45,8 @@ function validateActivityForm() {
   return true;
 }
 
+
+// Validate the data introduced in the routine form
 function validateRoutineForm(event) {
     const routineName = document.getElementById('routine-name').value.trim();
     const scheduleSelects = document.querySelectorAll('select[name="day_of_week[]"]');
@@ -61,7 +64,6 @@ function validateRoutineForm(event) {
                 break;
             }
         }
-
         if (!allSchedulesValid) {
             event.preventDefault();
         }
@@ -108,8 +110,7 @@ window.onclick = function(event) {
 };
 
 
-
-// Variables para el modal de confirmación de eliminación
+// Delete an event from the agenda
 var deleteModal = document.getElementById('deleteActivityModal');
 var confirmDeleteBtn = document.getElementById('confirmDelete');
 var cancelDeleteBtn = document.getElementById('cancelDelete');
@@ -122,29 +123,24 @@ function openDeleteModal(activityId, eventType) {
   deleteModal.style.display = 'block';
 }
 
-// Función para cerrar el modal de eliminación
 function closeDeleteModal() {
   activityToDelete = null;
   eventToDelete = null;
   deleteModal.style.display = 'none';
 }
 
-// Agregar event listener para cerrar el modal si se hace clic fuera de él
 window.addEventListener('click', function(event) {
   if (event.target === deleteModal) {
     closeDeleteModal();
   }
 });
 
-// Evento para cancelar eliminación
 cancelDeleteBtn.addEventListener('click', closeDeleteModal);
 
-// Evento para confirmar eliminación
 confirmDeleteBtn.addEventListener('click', function(event) {
-  event.preventDefault(); // Prevenir la acción predeterminada (enviar formulario)
+  event.preventDefault();
 
   if (activityToDelete) {
-    // Realizar la solicitud de eliminación al backend
     fetch(`/event/${eventToDelete}/${activityToDelete}/delete_event`, {
       method: 'POST',
       headers: {
@@ -155,24 +151,22 @@ confirmDeleteBtn.addEventListener('click', function(event) {
     .then(response => response.json())
     .then(data => {
       if (data.success) {
-        // Si la eliminación fue exitosa, cerrar el modal y actualizar la UI (si es necesario)
         closeDeleteModal();
         location.reload();
-        // Aquí puedes actualizar la interfaz o recargar los eventos si es necesario
-        // Ejemplo: eliminar el elemento de la lista de actividades/rutinas
-        document.getElementById(`activity-${activityToDelete}`).remove(); // Asumiendo que cada actividad tiene un id como "activity-{id}"
+        document.getElementById(`activity-${activityToDelete}`).remove();
       }
     })
   }
 });
 
 
-
+// Add a day and schedule to a routine
 function addSchedule() {
     var newSchedule = document.querySelector('.schedule').cloneNode(true);
     document.getElementById('schedules').appendChild(newSchedule);
 }
 
+// Remove an added day and schedule from a routine
 function removeSchedule() {
     var schedules = document.getElementById('schedules');
     if (schedules.children.length > 1) {
@@ -182,7 +176,7 @@ function removeSchedule() {
     }
 }
 
-
+// Open modal window
 function openModal() {
     var infoModal = document.getElementById('infoModal');
     infoModal.style.display = "block";
@@ -200,14 +194,12 @@ window.onclick = function(event) {
 }
 
 
-
-// Detectar el cambio en los checkboxes de tareas
+// Allocated tasks checkbox to toggle if it's completed
 document.querySelectorAll('.task-checkbox').forEach(checkbox => {
     checkbox.addEventListener('change', function() {
         const taskId = this.getAttribute('data-task-id');
         const isChecked = this.checked;
 
-        // Hacer la solicitud para actualizar el estado de la tarea
         fetch(`/task/${taskId}/toggle_completed`, {
             method: 'POST',
             headers: {

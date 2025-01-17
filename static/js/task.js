@@ -1,27 +1,15 @@
-function initMap() {
-    var input1 = document.getElementById('location1');
-    var autocomplete = new google.maps.places.Autocomplete(input1);
-
-    var input2 = document.getElementById('location2');
-    var autocomplete = new google.maps.places.Autocomplete(input2);
-}
-
-window.onload = function() {
-    initMap();
-};
-
+// Validation of the hours introduced by a user when editing a task.
 function validateHours() {
     var min_hours = parseInt(document.getElementById('min_hours').value);
     var max_hours = parseInt(document.getElementById('max_hours').value);
-
     if (min_hours > max_hours) {
         alert("Las horas mínimas no pueden ser mayores que las horas máximas.");
         return false;
     }
-
     return true;
 }
 
+// Edit and delete task modal windows
 var deleteTaskModal = document.getElementById('deleteTaskModal');
 var btnOpenDeleteTask = document.getElementById("deleteTask");
 var btnConfirmDelete = document.getElementById("confirmDelete");
@@ -56,53 +44,14 @@ window.onclick = function(event) {
     }
 }
 
-
+// Add a day and schedule to a task
 function addSchedule() {
-    var scheduleDiv = document.createElement('div');
-    scheduleDiv.className = 'schedule';
-
-    var dayLabel = document.createElement('label');
-    dayLabel.setAttribute('for', 'day_of_week');
-    dayLabel.innerHTML = 'Día de la semana:';
-    scheduleDiv.appendChild(dayLabel);
-
-    var daySelect = document.createElement('select');
-    daySelect.name = 'day_of_week[]';
-    var days = ['LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO', 'DOMINGO'];
-    for (var day of days) {
-        var option = document.createElement('option');
-        option.value = day;
-        option.innerHTML = day.charAt(0) + day.slice(1).toLowerCase();
-        daySelect.appendChild(option);
-    }
-    scheduleDiv.appendChild(daySelect);
-
-    var startLabel = document.createElement('label');
-    startLabel.setAttribute('for', 'start_time');
-    startLabel.innerHTML = 'Horario: ';
-    scheduleDiv.appendChild(startLabel);
-
-    var startTime = document.createElement('input');
-    startTime.type = 'time';
-    startTime.name = 'start_time[]';
-    startTime.required = true;
-    scheduleDiv.appendChild(startTime);
-
-    var endLabel = document.createElement('label');
-    endLabel.setAttribute('for', 'end_time');
-    endLabel.innerHTML = '- ';
-    scheduleDiv.appendChild(endLabel);
-
-    var endTime = document.createElement('input');
-    endTime.type = 'time';
-    endTime.name = 'end_time[]';
-    endTime.required = true;
-    scheduleDiv.appendChild(endTime);
-
-    var schedulesDiv = document.getElementById('schedules');
-    schedulesDiv.appendChild(scheduleDiv);
+    var newSchedule = document.querySelector('.schedule').cloneNode(true);
+    document.getElementById('schedules').appendChild(newSchedule);
 }
 
+
+// Remove an added day and schedule from a task
 function removeSchedule() {
     var schedules = document.getElementById('schedules');
     if (schedules.children.length > 1) {
@@ -112,10 +61,14 @@ function removeSchedule() {
     }
 }
 
+
+// Modifies the value shown in the form based on the selection of the user
 function updatePriorityValue(value) {
         document.getElementById('priorityValue').textContent = value;
 }
 
+
+// Open modal window with help information for objectives
 function openModal() {
     var infoModal = document.getElementById('infoModal');
     infoModal.style.display = "block";

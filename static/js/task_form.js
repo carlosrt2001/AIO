@@ -1,12 +1,4 @@
-function initMap() {
-    var input = document.getElementById('location');
-    var autocomplete = new google.maps.places.Autocomplete(input);
-}
-
-window.onload = function() {
-    initMap();
-};
-
+// Validation of the hours introduced by a user when creating a task.
 function validateHours() {
     var min_hours = parseInt(document.getElementById('min_hours').value);
     var max_hours = parseInt(document.getElementById('max_hours').value);
@@ -29,15 +21,18 @@ function validateHours() {
     return true;
 }
 
+// Modifies the value shown in the form based on the selection of the user
 function updatePriorityValue(value) {
         document.getElementById('priorityValue').textContent = value;
 }
 
+// Add a day and schedule to a task
 function addSchedule() {
     var newSchedule = document.querySelector('.schedule').cloneNode(true);
     document.getElementById('schedules').appendChild(newSchedule);
 }
 
+// Remove an added day and schedule from a task
 function removeSchedule() {
     var schedules = document.getElementById('schedules');
     if (schedules.children.length > 1) {
@@ -47,6 +42,8 @@ function removeSchedule() {
     }
 }
 
+
+// Open modal window with help information for objectives
 function openModal() {
     var infoModal = document.getElementById('infoModal');
     infoModal.style.display = "block";

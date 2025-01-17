@@ -1,3 +1,4 @@
+// Loads the image selected by the user and displays it in the form
 $(document).ready(function() {
     document.getElementById('imageInput').addEventListener('change', previewImage);
 });
@@ -15,6 +16,7 @@ function previewImage() {
     }
 }
 
+// Validates the information introduced by the user in the form is correct
 document.getElementById('formRegister').addEventListener('submit', function(event) {
     var password1 = document.getElementById('password1').value;
     var password2 = document.getElementById('password2').value;
@@ -43,6 +45,8 @@ document.getElementById('formRegister').addEventListener('submit', function(even
     }
 });
 
+
+// Validates that the value introduced as phone number follows the established rules
 function validatePhone(phone) {
     if (phone === "") {
             return true;
@@ -62,6 +66,7 @@ function validatePhone(phone) {
     return true;
 }
 
+// Validates that the value introduced as password follows the established rules
 function validatePassword(password, username) {
     var minLength = 8;
     var hasUpperCase = /[A-Z]/.test(password);
@@ -97,6 +102,7 @@ function validatePassword(password, username) {
     return true;
 }
 
+// Toggle the visibility of the password
 function togglePassword(inputId, eyeId) {
     var passwordInput = document.getElementById(inputId);
     var eyeIcon = document.getElementById(eyeId);
@@ -113,7 +119,7 @@ function togglePassword(inputId, eyeId) {
 }
 
 
-
+// Open modal window with help information for the registration
 function openModal() {
     var infoModal = document.getElementById('infoModal');
     infoModal.style.display = "block";

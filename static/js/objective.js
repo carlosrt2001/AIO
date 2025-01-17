@@ -1,9 +1,11 @@
+// Configure date format
 $(function() {
     $(".datepicker").datepicker({
         dateFormat: "dd/mm/yy"
     });
 });
 
+// Validation of the dates introduced by a user to create an objective.
 function validateDates() {
     var startDateInput = document.getElementById('edit_start_date');
     var endDateInput = document.getElementById('edit_end_date');
@@ -11,13 +13,11 @@ function validateDates() {
     var startDate = new Date(startDateInput.value);
     var endDate = new Date(endDateInput.value);
 
-    // Validar que ambas fechas estén completas
     if (!startDateInput.value || !endDateInput.value) {
         alert('Por favor, complete ambas fechas.');
         return false;
     }
 
-    // Validar que la fecha de finalización no sea anterior a la de inicio
     if (endDate < startDate) {
         alert('La fecha de finalización debe ser mayor o igual a la fecha de inicio.');
         return false;
@@ -26,9 +26,11 @@ function validateDates() {
     return true;
 }
 
+// Modifies the value shown in the form based on the selection of the user
 function updatePriorityValue(value) {
         document.getElementById('priorityValue').textContent = value;
 }
+
 
 var buttonsTask = document.querySelectorAll('.btnTask');
 buttonsTask.forEach(function(button) {
@@ -39,6 +41,7 @@ buttonsTask.forEach(function(button) {
 });
 
 
+// Open modal windows to edit and delete an objective
 var deleteObjectiveModal = document.getElementById('deleteObjectiveModal');
 var btnOpenDeleteObjective = document.getElementById("deleteObjective");
 var btnConfirmDelete = document.getElementById("confirmDelete");
@@ -78,6 +81,9 @@ window.onclick = function(event) {
     }
 }
 
+
+
+// Open modal window with help information for objectives
 function openModal() {
     var infoModal = document.getElementById('infoModal');
     infoModal.style.display = "block";

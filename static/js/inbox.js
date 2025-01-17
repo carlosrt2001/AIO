@@ -1,3 +1,4 @@
+// Delete a notification
 var deleteNotificationModal = document.getElementById('deleteNotificationModal');
 var btnConfirmDeleteNotification = document.getElementById("confirmDeleteNotification");
 var btnCancelDeleteNotification = document.getElementById("cancelDeleteNotification");
@@ -29,6 +30,7 @@ window.onclick = function(event) {
 };
 
 
+// Delete all notifications
 var confirmationModal = document.getElementById('confirmationModal');
 var openConfirmationModalButton = document.getElementById("openConfirmationModal");
 var confirmDeleteAllNotificationsButton = document.getElementById("confirmDeleteAllNotifications");

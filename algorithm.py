@@ -1,29 +1,47 @@
 from flask import session
 from datetime import datetime, timedelta
-from db import db, DayOfWeek, User, Objective, Task, TaskSchedule, Activity, Routine, RoutineSchedule, Notification, AllocatedTask
+from db import *
 
 
 def calculate_next_sunday(date):
+    """
+    Calculates the date of next week's Sunday.
+    :param date: Today's date.
+    :return: Next week's Sunday
+    """
     this_week_sunday = date + timedelta(days=(6 - date.weekday()))
     return this_week_sunday + timedelta(days=7)
+
 
 start_date = datetime.now().date()
 end_date = calculate_next_sunday(start_date)
 
+
 def algorithm():
+    """
+    Invokes the procedures to find out the tasks that have to be allocated in the user's agenda.
+    :return: Array containing the new tasks with their dates and times to be allocated in the agenda.
+    """
     activities, routines, tasks = extract_activities_routines_tasks()
-    busy_time = order_busy_time(activities, routines, tasks, start_date, end_date)
-    free_time = calculate_free_time(busy_time, start_date, end_date)
-    objectives_and_tasks = get_objectives_and_tasks(session.get('user_id'), start_date, end_date)
+    busy_time = order_busy_time(activities, routines, tasks)
+    free_time = calculate_free_time(busy_time)
+    objectives_and_tasks = get_objectives_and_tasks(session.get('user_id'))
     allocated_tasks = allocate_tasks(objectives_and_tasks, free_time)
     return allocated_tasks
 
+
 def extract_activities_routines_tasks():
+    """
+    Extracts from the database the activities, routines and tasks that are allocated in the agenda in the
+    bewteen the starting date of allocation (today) and the ending date (next week Sunday).
+    :return: Arrays with the activities, routines and tasks already allocated in the user's agenda in the time period.
+    """
     user_id = session.get('user_id')
     activities_array = []
     routines_array = []
     tasks_array = []
-    activities = (Activity.query.filter_by(user_id=user_id).filter(Activity.date >= start_date, Activity.date <= end_date).all())
+    activities = (
+        Activity.query.filter_by(user_id=user_id).filter(Activity.date >= start_date, Activity.date <= end_date).all())
     for activity in activities:
         activities_array.append(
             {
@@ -54,7 +72,8 @@ def extract_activities_routines_tasks():
             }
         )
 
-    tasks = (AllocatedTask.query.filter_by(user_id=user_id).filter(AllocatedTask.date >= start_date, AllocatedTask.date <= end_date).all())
+    tasks = (AllocatedTask.query.filter_by(user_id=user_id).filter(AllocatedTask.date >= start_date,
+                                                                   AllocatedTask.date <= end_date).all())
     for task in tasks:
         tasks_array.append(
             {
@@ -68,7 +87,14 @@ def extract_activities_routines_tasks():
     return activities_array, routines_array, tasks_array
 
 
-def order_busy_time(activities, routines, tasks, start_date, end_date):
+def order_busy_time(activities, routines, tasks):
+    """
+    Orders the schedules of the activities, routines and tasks already allocated in the agenda in chronological order.
+    :param activities: Activities scheduled in the planification time period.
+    :param routines: Routines scheduled in the planification time period.
+    :param tasks: Tasks scheduled in the planification time period.
+    :return: Array with all the times already scheduled in the agenda.
+    """
     busy_time = []
 
     for activity in activities:
@@ -91,6 +117,11 @@ def order_busy_time(activities, routines, tasks, start_date, end_date):
 
 
 def get_weekday_number(day_name):
+    """
+    Assigns a value to represent a day of the week
+    :param day_name: String representing a day of the week.
+    :return: Number representing the day of the week.
+    """
     days_of_week = {
         "Lunes": 0,
         "Martes": 1,
@@ -103,7 +134,12 @@ def get_weekday_number(day_name):
     return days_of_week[day_name]
 
 
-def get_objectives_and_tasks(user_id, start_date, end_date):
+def get_objectives_and_tasks(user_id):
+    """
+    Extracts the user's objectives and tasks from the database
+    :param user_id: Identificator of the user with the active session.
+    :return: Array with the user's objectives and tasks for each objective.
+    """
     objectives_array = []
 
     objectives = Objective.query.filter_by(user_id=user_id, completed=False).filter(
@@ -147,7 +183,13 @@ def get_objectives_and_tasks(user_id, start_date, end_date):
 
     return objectives_array
 
-def calculate_free_time(busy_time, start_date, end_date):
+
+def calculate_free_time(busy_time):
+    """
+    Based on the time busy in the agenda, it calculates the periods of free time for each day.
+    :param busy_time: Array with the times already busy for each day.
+    :return: Array with the periods of time available to allocate tasks for each day between today and next Sunday.
+    """
     free_time = []
     current_date = start_date
     current_time = datetime.min.time()
@@ -173,6 +215,12 @@ def calculate_free_time(busy_time, start_date, end_date):
 
 
 def allocate_tasks(objectives, free_time):
+    """
+    Allocates the tasks based on the objectives' and tasks' priorities in the agenda's free periods of time to schedule.
+    :param objectives: Array with the objectives and tasks set by the user.
+    :param free_time: Array with the available periods of time each day to allocate new tasks.
+    :return: Array containing the new tasks with their dates and times to be allocated in the agenda.
+    """
     user_id = session.get('user_id')
     allocated_tasks = []
     completed_tasks = AllocatedTask.query.filter_by(user_id=user_id).filter(AllocatedTask.date >= start_date,
@@ -191,7 +239,6 @@ def allocate_tasks(objectives, free_time):
             task_hours_by_week[task_week_number][objective_id] = 0
 
         task_hours_by_week[task_week_number][objective_id] += completed_task.dedicated_hours
-
 
     free_time_by_week = {}
     for interval in free_time:
@@ -237,7 +284,8 @@ def allocate_tasks(objectives, free_time):
 
                         time_for_task = (datetime.combine(start_date, possible_end_time) - datetime.combine(start_date, possible_start_time)).total_seconds() / 3600
 
-                        dedicated_hours = min(task['max_hours'], max(task['min_hours'], time_for_task), max_available_hours)
+                        dedicated_hours = min(task['max_hours'], max(task['min_hours'], time_for_task),
+                                              max_available_hours)
 
                         if dedicated_hours >= task['min_hours']:
                             allocated_task = {
@@ -261,4 +309,3 @@ def allocate_tasks(objectives, free_time):
                             break
 
     return allocated_tasks
-

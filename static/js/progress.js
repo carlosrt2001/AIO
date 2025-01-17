@@ -1,3 +1,4 @@
+// Open modal window with help information for the progress page
 function openModal() {
     var infoModal = document.getElementById('infoModal');
     infoModal.style.display = "block";

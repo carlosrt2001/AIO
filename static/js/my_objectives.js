@@ -10,6 +10,7 @@ buttonsObjective.forEach(function(button) {
     });
 });
 
+// Open modal window with help information for objectives
 function openModal() {
     var infoModal = document.getElementById('infoModal');
     infoModal.style.display = "block";

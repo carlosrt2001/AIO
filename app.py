@@ -1,39 +1,45 @@
 from flask import Flask, request, render_template, redirect, session, jsonify
-from db import db, DayOfWeek, User, Objective, Task, TaskSchedule, Activity, Routine, RoutineSchedule, Notification, AllocatedTask
+from sqlalchemy import and_
+from sqlalchemy.sql import func
+from db import *
 from algorithm import *
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from datetime import datetime
 from dateutil import parser
-from sqlalchemy import and_
 from unidecode import unidecode
 import os
 import locale
 import uuid
-from sqlalchemy.sql import func
 
 
+# Configuration of the application
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///AIO.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'TFG_carlos-AIO!2024/2025'  # Clave secreta utilizada por Flask para tareas de seguridad
+app.config['SECRET_KEY'] = 'TFG_carlos-AIO!2024/2025'
 app.config['OBJECTIVE_IMAGES'] = 'static/images/objectives'
 app.config['PROFILE_IMAGES'] = 'static/images/profile'
+
 
 db.init_app(app)
 with app.app_context():
     db.create_all()
 
 
-# INDEX
 @app.route('/')
 def index():
+    """
+    Renders the User Portal.
+    """
     return render_template('index.html')
 
 
-# REGISTER
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    """
+    Renders the register form and processes its information
+    """
     if request.method == 'POST':
         image = request.files['imageInput']
         username = request.form['user']
@@ -51,7 +57,6 @@ def register():
         else:
             filename = None
 
-        # Error si el nombre de usuario ya está en uso
         existing_user = User.query.filter_by(username=username).first()
         if existing_user:
             message = "El nombre de usuario ya está en uso por otro usuario."
@@ -69,21 +74,18 @@ def register():
             phone_number = None
             phone_country_code = None
         else:
-            # Error si el teléfono ya está en uso
             existing_phone = User.query.filter_by(phone_country_code=phone_country_code,
                                                   phone_number=phone_number).first()
             if existing_phone:
                 message = "El número de teléfono ya está en uso por otro usuario."
                 return render_template('register.html', message=message)
 
-        # Se inserta el nuevo usuario en la base de datos
         new_user = User(image=filename, username=username, email=email,
                         phone_country_code=phone_country_code, phone_number=phone_number,
                         password=hashed_password, agenda_color='#2eb19f')
         db.session.add(new_user)
         db.session.commit()
 
-        # Se crea la notificación de bienvenida
         create_notification(new_user.id, "Bienvenido", "Te has registrado exitosamente.")
 
         session['user_id'] = new_user.id
@@ -92,16 +94,17 @@ def register():
     return render_template('register.html')
 
 
-# LOG IN
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    """
+    Renders the login form and processes its information.
+    """
     if request.method == 'POST':
-        # Recogida de datos del formulario de inicio de sesión
         username = request.form['user']
         password = request.form['password']
 
-        user = User.query.filter_by(username=username).first()  # se busca el nombre de usuario
-        user2 = User.query.filter_by(email=username).first()  # se busca el email
+        user = User.query.filter_by(username=username).first()
+        user2 = User.query.filter_by(email=username).first()
         if user and check_password_hash(user.password, password):
             session['user_id'] = user.id
             return redirect('/agenda/0')
@@ -109,7 +112,6 @@ def login():
             session['user_id'] = user2.id
             return redirect('/agenda/0')
         else:
-            # Mensaje de error si el nombre de usuario o la contraseña no coinciden
             message = "Nombre de usuario y/o contraseña incorrectos"
             return render_template('login.html', message=message)
 
@@ -117,9 +119,12 @@ def login():
 
 
 
-#OBJECTIVES
 @app.route('/objectives', methods=['GET', 'POST'])
 def show_objectives():
+    """
+    Renders the objectives page, displaying the objectives set by a user
+    :return:
+    """
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     if not user:
@@ -150,6 +155,10 @@ def show_objectives():
 
 @app.route('/objective/<int:objective_id>')
 def view_objective(objective_id):
+    """
+    Renders the page displaying the information of an objective.
+    :param objective_id: Identificator of the objetive to be displayed.
+    """
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     if not user:
@@ -166,13 +175,15 @@ def view_objective(objective_id):
 
 @app.route('/objective_form', methods=['GET', 'POST'])
 def objective_form():
+    """
+    Renders the form to create an objective and processes its information.
+    """
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     if not user:
         return render_template('login.html')
 
     if request.method == 'POST':
-        # Recogida de datos del formulario de objetivo
         name = request.form['name']
         image = request.files['imageInput']
         color = request.form['color']
@@ -206,7 +217,6 @@ def objective_form():
         db.session.add(new_objective)
         db.session.commit()
 
-        # Se crea la notificación con el mensaje de nuevo objetivo creado
         create_notification(user_id, "Nuevo Objetivo", f"Has creado un nuevo objetivo: {name}.")
 
         return redirect('/objective/{0}'.format(new_objective.id))
@@ -216,6 +226,10 @@ def objective_form():
 
 @app.route('/edit_objective/<int:objective_id>', methods=['POST'])
 def edit_objective(objective_id):
+    """
+    Processes the information provided when an objective is edited in its modal window.
+    :param objective_id: Identificator of the objetive to be edited.
+    """
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     if not user:
@@ -224,7 +238,6 @@ def edit_objective(objective_id):
     objective = Objective.query.filter_by(id=objective_id, user_id=user_id).first()
 
     if objective:
-        # Recogida de datos del formulario de objetivo
         objective.name = request.form['name']
         objective.priority = request.form['priority']
         objective.hours = request.form['hours']
@@ -251,6 +264,10 @@ def edit_objective(objective_id):
 
 @app.route('/objective/<int:objective_id>/delete_objective', methods=['GET', 'POST'])
 def delete_objective(objective_id):
+    """
+    Deletes an objective from the database.
+    :param objective_id: Identificator of the objetive to be deleted.
+    """
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     if not user:
@@ -267,9 +284,12 @@ def delete_objective(objective_id):
         return "No se pudo encontrar el objetivo para eliminar", 404
 
 
-# TASKS
 @app.route('/task/<int:task_id>')
 def show_task(task_id):
+    """
+    Renders the page showing a task's information.
+    :param task_id: Identificator of the task to be displayed.
+    """
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     if not user:
@@ -286,6 +306,11 @@ def show_task(task_id):
 
 @app.route('/<int:objective_id>/task_form', methods=['GET', 'POST'])
 def task_form(objective_id):
+    """
+    Renders the form to create a task and processes its information.
+    :param objective_id: Identificator of the objective which the task will be associated to.
+    :return:
+    """
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     if not user:
@@ -329,6 +354,10 @@ def task_form(objective_id):
 
 @app.route('/edit_task/<int:task_id>', methods=['POST'])
 def edit_task(task_id):
+    """
+    Processes the information provided when a task is edited in its modal window.
+    :param task_id: Identificator of the task to be edited.
+    """
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     if not user:
@@ -370,6 +399,10 @@ def edit_task(task_id):
 
 @app.route('/task/<int:task_id>/delete_task', methods=['GET', 'POST'])
 def delete_task(task_id):
+    """
+    Deletes a task from the database.
+    :param task_id: Identificator of the task to be deleted.
+    """
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     if not user:
@@ -388,6 +421,10 @@ def delete_task(task_id):
 
 @app.route('/agenda/<int:offset>', methods=['GET'])
 def agenda(offset=0):
+    """
+    Renders the page displaying the user's agenda.
+    :param offset: Value to calculate the week's events that have to be displayed.
+    """
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     if not user:
@@ -468,6 +505,9 @@ def agenda(offset=0):
 
 @app.route('/plan', methods=['GET', 'POST'])
 def plan():
+    """
+    Invokes the algorithm to generate the allocation of tasks in the agenda and store them in the database.
+    """
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     if not user:
@@ -496,6 +536,11 @@ def plan():
 
 @app.route('/task/<int:task_id>/toggle_completed', methods=['POST'])
 def toggle_task_completed(task_id):
+    """
+    Toggles in the database the actual boolean value of an allocated task in the agenda if a users sets it as
+    completed or not.
+    :param task_id: Identificator of the allocated task.
+    """
     user_id = session.get('user_id')
     if not user_id:
         return jsonify({'success': False, 'message': 'User not logged in'}), 401
@@ -512,6 +557,9 @@ def toggle_task_completed(task_id):
 
 @app.route('/activity_form', methods=['GET', 'POST'])
 def activity_form():
+    """
+    Processes the information introduced in the modal window to add an activity to the agenda.
+    """
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     if not user:
@@ -537,6 +585,9 @@ def activity_form():
 
 @app.route('/routine_form', methods=['GET', 'POST'])
 def routine_form():
+    """
+    Processes the information introduced in the modal window to add a routine to the agenda.
+    """
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     if not user:
@@ -574,6 +625,11 @@ def routine_form():
 
 @app.route('/event/<string:event_type>/<int:event_id>/delete_event', methods=['POST'])
 def delete_event(event_type, event_id):
+    """
+    Deletes from the database an event in the agenda.
+    :param event_type: Indicates if the event to be deleted is an activity, a routine or an allocated task.
+    :param event_id: Identificator of the event (primary key on its table in the database).
+    """
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     if not user:
@@ -607,6 +663,10 @@ def delete_event(event_type, event_id):
 
 @app.route('/update_agenda_color', methods=['POST'])
 def update_agenda_color():
+    """
+    Updates the user's agenda color in the database.
+    :return:
+    """
     user_id = session.get('user_id')
     user = User.query.filter_by(id=user_id).first()
     new_color = request.json.get('color')
@@ -619,11 +679,11 @@ def update_agenda_color():
 
 
 
-
-
-#PROGRESS
 @app.route('/progress')
 def progress():
+    """
+    Renders the page to display the progress in tasks and objectives achieved by a user.
+    """
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     if not user:
@@ -682,9 +742,12 @@ def progress():
     )
 
 
-# INBOX
 @app.route('/inbox')
 def inbox():
+    """
+    Renders the page to display the inbox with all the notifications sent to a user.
+    :return:
+    """
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     if not user:
@@ -697,6 +760,10 @@ def inbox():
 
 @app.route('/inbox/<int:notification_id>/delete_notification', methods=['GET', 'POST'])
 def delete_notification(notification_id):
+    """
+    Deletes a notification from the database.
+    :param notification_id: Identificator of the notificaition.
+    """
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     if not user:
@@ -712,6 +779,9 @@ def delete_notification(notification_id):
 
 @app.route('/inbox/delete_all_notifications', methods=['POST'])
 def delete_all_notifications():
+    """
+    Deletes all the notifications of a user from the database.
+    """
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     if not user:
@@ -724,6 +794,12 @@ def delete_all_notifications():
 
 
 def create_notification(user_id, title, description):
+    """
+    Creates a new notification in the database.
+    :param user_id: Identificator of the user to who the notification corresponds.
+    :param title: Title of the notification.
+    :param description: Description of the notification.
+    """
     now = datetime.now()
     new_notification = Notification(
         date=now.date(),
@@ -736,9 +812,12 @@ def create_notification(user_id, title, description):
     db.session.commit()
 
 
-# PROFILE
 @app.route('/profile')
 def profile():
+    """
+    Renders the page to display the user's profile.
+    :return:
+    """
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     if not user:
@@ -749,6 +828,10 @@ def profile():
 
 @app.route('/edit_profile', methods=['POST'])
 def edit_profile():
+    """
+    Updates the user's information in the database based on the information provided in the window modal to edit
+    the profile.
+    """
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     if not user:
@@ -800,6 +883,9 @@ def edit_profile():
 
 @app.route('/logout')
 def logout():
+    """
+    Closes the user active session in the device and displays the User Portal.
+    """
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     if not user:
@@ -811,6 +897,9 @@ def logout():
 
 @app.route('/delete_account', methods=['GET', 'POST'])
 def delete_account():
+    """
+    Deletes all the information from the database related to the user with the active session in the device.
+    """
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     if not user:
@@ -840,26 +929,44 @@ def delete_account():
 
 @app.route('/help')
 def help():
+    """
+    Renders the page with the help information.
+    """
     return render_template('help.html', active_page='help')
 
 @app.route('/legal')
 def legal():
+    """
+    Renders the page with the Legal Notice.
+    """
     return render_template('legal.html', active_page='legal')
 
 @app.route('/privacy_policy')
 def privacy_policy():
+    """
+    Renders the page with the Privacy Policy.
+    """
     return render_template('privacy_policy.html', active_page='privacy-policy')
 
 
-# ERROR
 @app.route('/error')
 def error():
+    """
+    Renders the page informing of an error or exception.
+    :return:
+    """
     return render_template('error.html', active_page='error')
 
 
 @app.errorhandler(Exception)
 def handle_exception(e):
+    """
+    Renders the error page when an exception or error happens in the application.
+    :param e: Description of the exception.
+    """
     return render_template("error.html", error=e)
+
+
 
 
 if __name__ == '__main__':

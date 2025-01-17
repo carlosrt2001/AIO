@@ -1,8 +1,10 @@
+// Get information submitted in the form by the user
 document.getElementById('formLogin').addEventListener('submit', function(event) {
     var user = document.getElementById('user').value;
     var password = document.getElementById('password').value;
 });
 
+// Toggle the visibility of the password
 function togglePassword(inputId, eyeId) {
     var passwordInput = document.getElementById(inputId);
     var eyeIcon = document.getElementById(eyeId);
@@ -18,6 +20,7 @@ function togglePassword(inputId, eyeId) {
     }
 }
 
+// Open modal window with help information to log in
 function openModal() {
     var infoModal = document.getElementById('infoModal');
     infoModal.style.display = "block";
