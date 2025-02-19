@@ -1,7 +1,11 @@
 Trabajo de Fin de Grado - ULPGC 2024
+
 Título: Agenda Inteligente para la Gestión de Eficiente de Objetivos Personales
+
 Autor: Carlos Rodríguez del Toro
+
 Tutor: José Fortes Gálvez
+
 
 DESCRIPCIÓN:
 "Agenda Inteligente para la Gestión Eficiente de Objetivos Personales" es una aplicación web diseñada para ayudar a los usuarios a planificar sus objetivos personales de manera eficiente. Mediante un algoritmo determinista de planificación, la aplicación asigna automáticamente las tareas a la agenda del usuario, optimizando el uso del tiempo y asegurando un mejor cumplimiento de los objetivos establecidos.
