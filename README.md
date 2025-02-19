@@ -19,10 +19,9 @@ CARACTERÍSTICAS:
 
 
 TECNOLOGÍAS:
-
-Backend: Python (Flask) → Elegido por su simplicidad y eficiencia para construir APIs REST.
-Frontend: HTML, CSS, JavaScript → Desarrollo web estándar para interfaces interactivas.
-Base de Datos: SQLAlchemy (ORM para bases de datos relacionales).
+- Backend: Python (Flask) → Elegido por su simplicidad y eficiencia para construir APIs REST.
+- Frontend: HTML, CSS, JavaScript → Desarrollo web estándar para interfaces interactivas.
+- Base de Datos: SQLAlchemy (ORM para bases de datos relacionales).
 
 METODOLOGÍA: Kanban.
 
